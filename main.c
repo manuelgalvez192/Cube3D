@@ -6,7 +6,7 @@
 /*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:33:27 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/08/29 23:47:03 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/08/30 02:41:33 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,21 @@ bool check_extension(const char *file_name, const char *extension)
 
 int	main(int argc, char **argv)
 {
+	t_config	*config;
+	int			fd;
+
 	if (argc != 2)
-		return (perror("Error\nNumero de argunmentos invalido\n"), 1);
-	if (!check_extension(argv[1], ".cub"))
-		return (perror("Error\nExtension de archivo invalida\n"), 1);
-	t_config config;
-	if (parse_file(argv[1], &config))
-		return (1);
-	
+		return (error_msg("Error\nNumero de argumentos invalido\n", NULL), 1);
+	if (check_extension(argv[1], ".cub"))
+		return (error_msg("Error\nExtension de archivo invalida\n", NULL), 1);
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		return (error_msg("Error\nNo se pudo abrir el archivo\n", NULL), 1);
+	config = ft_calloc(1, sizeof(t_config));
+	if (!config)
+		return (error_msg("Error\nFallo al asignar de memoria\n", config), 1);
+	parse_file(config, fd);
+	close(fd);
+	free_config(&config);
 	return (0);
 }

@@ -20,7 +20,11 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 # A list of all .c files in the current directory
-SRCS = main.c
+SRCS = main.c\
+		free.c\
+		parser.c\
+		parse_texture.c\
+		parse_map.c\
 
 # A list of all .o files that correspond to the .c files
 OBJS = $(SRCS:.c=.o)
