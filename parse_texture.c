@@ -6,7 +6,7 @@
 /*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:52:58 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/08/30 03:10:22 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/08/30 03:41:47 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,20 @@ int parse_texture_line(char *line, t_config *config)
     id = get_identifier(line);
     if (id == 0)
     {
-        // detectar si empieza con N, S, W, E → error de formato
         if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E')
             return (printf("Error\nIdentificador de textura inválido\n"), -1);
-        return 0; // no es textura, probar color
+        return 0;
     }
-
     if (line[2] != ' ' && line[2] != '\t')
         return (printf("Error\nFormato inválido: espacio requerido después del identificador de textura\n"), -1);
-
     line += 2;
     while (*line == ' ' || *line == '\t')
         line++;
     if (*line == '\0')
         return (printf("Error\nFalta path en textura\n"), -1);
-
     path = ft_strdup(line);
     if (!path)
         return (printf("Error\nFallo al asignar memoria\n"), -1);
-
     if (id == 1)
         config->no_texture = path;
     else if (id == 2)
@@ -60,11 +55,8 @@ int parse_texture_line(char *line, t_config *config)
         config->we_texture = path;
     else if (id == 4)
         config->ea_texture = path;
-
     return 1;
 }
-
-
 
 int parse_rgb(char *str, t_color *color)
 {
@@ -88,29 +80,26 @@ int parse_color_line(char *line, t_config *config)
 {
     if (line[0] == 'F')
     {
-        // Verificar espacio obligatorio
         if (line[1] != ' ' && line[1] != '\t')
             return (printf("Error\nFormato inválido: espacio requerido después de F\n"), -1);
-
-        line++; // saltar 'F'
+        line++;
         while (*line == ' ' || *line == '\t')
             line++;
         if (parse_rgb(line, &config->floor) == -1)
             return -1;
-        return 1; // línea procesada correctamente
+        return 1;
     }
     if (line[0] == 'C')
     {
         if (line[1] != ' ' && line[1] != '\t')
             return (printf("Error\nFormato inválido: espacio requerido después de C\n"), -1);
-
-        line++; // saltar 'C'
+        line++;
         while (*line == ' ' || *line == '\t')
             line++;
         if (parse_rgb(line, &config->ceiling) == -1)
             return -1;
-        return 1; // línea procesada correctamente
+        return 1;
     }
-    return 0; // no es color
+    return 0;
 }
 

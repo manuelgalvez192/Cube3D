@@ -6,7 +6,7 @@
 /*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/08/30 03:24:15 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/01 00:21:23 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ typedef struct s_config
 	t_color	floor;
 	t_color	ceiling;
 	char	**map;
+	int		map_rows;
 	int		map_width;
 	int		map_height;
 	int		player_x;
 	int		player_y;
 	char	player_dir;
+	char	*file_path;
 }	t_config;
 
 /* --- MAIN --- */
@@ -54,6 +56,9 @@ int		parse_rgb(char *str, t_color *color);
 int		parse_color_line(char *line, t_config *config);
 
 /* --- PARSE MAP --- */
+int		is_valid_map_line(char *line);
+char	**grow_map_array(char **old, int count, int new_cap);
+void	free_partial_map(char **map, int count);
 void	parse_map(int fd, char *first_line, t_config *config);
 
 /* --- FREE --- */

@@ -6,11 +6,21 @@
 /*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:33:27 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/08/30 02:41:33 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/01 00:57:06 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
+
+// Muestra el mapa en consola (para debug)
+void show_map(t_config *config)
+{
+	printf("Mapa (%d filas):\n", config->map_rows);
+	for (int i = 0; i < config->map_rows; ++i)
+	{
+		printf("%s", config->map[i]);
+	}
+}	
 
 bool check_extension(const char *file_name, const char *extension)
 {
@@ -36,8 +46,13 @@ int	main(int argc, char **argv)
 	config = ft_calloc(1, sizeof(t_config));
 	if (!config)
 		return (error_msg("Error\nFallo al asignar de memoria\n", config), 1);
+	config->file_path = ft_strdup(argv[1]);
+	if (!config->file_path)
+		return (error_msg("Error\nFallo al asignar de memoria\n", config), 1);
 	parse_file(config, fd);
+	show_map(config);
 	close(fd);
 	free_config(&config);
 	return (0);
 }
+
