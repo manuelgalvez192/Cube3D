@@ -6,7 +6,7 @@
 /*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:52:58 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/08/30 03:41:47 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/01 01:20:53 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,29 @@ int get_identifier(char *line)
 	return (0);
 }
 
+void path_maker(t_config *config, char *line, int id)
+{
+    char    *path;
+    
+    path = ft_strdup(line);
+    if (!path)
+    {
+        printf("Error\nFallo al asignar memoria\n");
+        return ;
+    }
+    if (id == 1)
+        config->no_texture = path;
+    else if (id == 2)
+        config->so_texture = path;
+    else if (id == 3)
+        config->we_texture = path;
+    else if (id == 4)
+        config->ea_texture = path;
+    free(path);
+}
+
 int parse_texture_line(char *line, t_config *config)
 {
-    char *path;
     int id;
 
     id = get_identifier(line);
@@ -44,17 +64,7 @@ int parse_texture_line(char *line, t_config *config)
         line++;
     if (*line == '\0')
         return (printf("Error\nFalta path en textura\n"), -1);
-    path = ft_strdup(line);
-    if (!path)
-        return (printf("Error\nFallo al asignar memoria\n"), -1);
-    if (id == 1)
-        config->no_texture = path;
-    else if (id == 2)
-        config->so_texture = path;
-    else if (id == 3)
-        config->we_texture = path;
-    else if (id == 4)
-        config->ea_texture = path;
+    path_maker(config, line, id);
     return 1;
 }
 

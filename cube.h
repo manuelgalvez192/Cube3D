@@ -6,7 +6,7 @@
 /*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/01 00:21:23 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/01 01:26:48 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	parse_file(t_config *config, int fd);
 
 /* --- PARSE TEXTURE --- */
 int		get_identifier(char *line);
+void	path_maker(t_config *config, char *line, int id);
 int		parse_texture_line(char *line, t_config *config);
 int		parse_rgb(char *str, t_color *color);
 int		parse_color_line(char *line, t_config *config);
@@ -62,6 +63,7 @@ void	free_partial_map(char **map, int count);
 void	parse_map(int fd, char *first_line, t_config *config);
 
 /* --- FREE --- */
+void	free_partial_map(char **map, int count);
 void	free_split(char **split);
 void	error_msg(char *msg, t_config *config);
 void	free_config(t_config **config);

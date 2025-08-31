@@ -6,7 +6,7 @@
 /*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:05:59 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/01 00:56:35 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/01 01:12:26 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,3 @@ void parse_file(t_config *config, int fd)
         error_msg("Error\nMapa no encontrado\n", config);
     parse_map(fd, map_line, config);
 }
-

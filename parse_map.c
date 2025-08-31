@@ -6,7 +6,7 @@
 /*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 03:20:43 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/01 01:04:26 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/01 01:35:35 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,43 @@
 int is_valid_map_line(char *line)
 {
     int has_map_char = 0;
+    int in_map = 0;              /* ya hemos empezado a ver chars de mapa */
+    int saw_space_after_map = 0; /* vimos un espacio/tabs después de haber empezado el mapa */
+
     if (!line)
         return 0;
-    while (*line)
+
+    while (*line && *line != '\n')
     {
-        if (*line == '0' || *line == '1' || *line == 'N' || *line == 'S' || *line == 'E' || *line == 'W')
+        char c = *line;
+
+        if (c == ' ' || c == '\t')
         {
-            has_map_char = 1;
+            if (in_map)
+                saw_space_after_map = 1; /* podría ser trailing; si luego aparece otro mapa -> error */
+            /* si no estamos in_map, son espacios iniciales y se ignoran */
         }
-        else if (*line != ' ' && *line != '\t' && *line != '\n')
+        else if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
         {
-            printf("Caracter invalido en el mapa: '%c'\n", *line);
+            if (saw_space_after_map)
+            {
+                /* Encontramos un mapa después de un espacio: espacio en mitad -> inválido */
+                printf("Caracter invalido en el mapa: espacio en mitad de línea\n");
+                return 0;
+            }
+            has_map_char = 1;
+            in_map = 1;
+        }
+        else
+        {
+            printf("Caracter invalido en el mapa: '%c'\n", c);
             return 0;
         }
         line++;
     }
     return has_map_char;
 }
+
 
 char **grow_map_array(char **old, int count, int new_cap)
 {
@@ -45,15 +65,6 @@ char **grow_map_array(char **old, int count, int new_cap)
     if (old)
         free(old);
     return (new);
-}
-
-void free_partial_map(char **map, int count)
-{
-    if (!map)
-        return;
-    for (int i = 0; i < count; ++i)
-        free(map[i]);
-    free(map);
 }
 
 void parse_map(int fd, char *first_line, t_config *config)

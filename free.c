@@ -6,23 +6,19 @@
 /*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:18:17 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/08/30 02:40:22 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/01 01:26:38 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-void free_raw_map(char **raw_map, int count)
+void free_partial_map(char **map, int count)
 {
-    int i = 0;
-    if (!raw_map)
+    if (!map)
         return;
-    while (i < count)
-    {
-        free(raw_map[i]);
-        i++;
-    }
-    free(raw_map);
+    for (int i = 0; i < count; ++i)
+        free(map[i]);
+    free(map);
 }
 
 void free_split(char **split)
@@ -51,7 +47,8 @@ void	free_config(t_config **config)
 {
 	if (config && *config)
 	{
-		free((*config)->map);
+		free_split((*config)->map);
+		free((*config)->file_path);
 		free(*config);
 		*config = NULL;
 	}
