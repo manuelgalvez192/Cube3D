@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 03:20:43 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/01 01:35:35 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/01 18:07:44 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,57 +14,24 @@
 
 int is_valid_map_line(char *line)
 {
-    int has_map_char = 0;
-    int in_map = 0;              /* ya hemos empezado a ver chars de mapa */
-    int saw_space_after_map = 0; /* vimos un espacio/tabs después de haber empezado el mapa */
+    int has_map_char;
+    int in_map;
+    int saw_space_after_map;
+    char c;
 
+    has_map_char = 0;
+    in_map = 0;
+    saw_space_after_map = 0;
     if (!line)
-        return 0;
-
+        return (0);
     while (*line && *line != '\n')
     {
-        char c = *line;
-
-        if (c == ' ' || c == '\t')
-        {
-            if (in_map)
-                saw_space_after_map = 1; /* podría ser trailing; si luego aparece otro mapa -> error */
-            /* si no estamos in_map, son espacios iniciales y se ignoran */
-        }
-        else if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
-        {
-            if (saw_space_after_map)
-            {
-                /* Encontramos un mapa después de un espacio: espacio en mitad -> inválido */
-                printf("Caracter invalido en el mapa: espacio en mitad de línea\n");
-                return 0;
-            }
-            has_map_char = 1;
-            in_map = 1;
-        }
-        else
-        {
-            printf("Caracter invalido en el mapa: '%c'\n", c);
-            return 0;
-        }
+        c = *line;
+        if (!process_map_char(c, &in_map, &saw_space_after_map, &has_map_char))
+            return (0);
         line++;
     }
-    return has_map_char;
-}
-
-
-char **grow_map_array(char **old, int count, int new_cap)
-{
-    char **new;
-
-    new = malloc(sizeof(char *) * new_cap);
-    if (!new)
-        return (NULL);
-    for (int i = 0; i < count; ++i)
-        new[i] = old[i];
-    if (old)
-        free(old);
-    return (new);
+    return (has_map_char);
 }
 
 void parse_map(int fd, char *first_line, t_config *config)

@@ -1,6 +1,6 @@
 MAKEFLAGS += --no-print-directory
 # The name of your project
-NAME = CUBE3D
+NAME = cub3D
 MAP = ./maps/map.cub
 LIBFT = ./libft/
 LIBFT_LIB = $(LIBFT)libft.a
@@ -25,6 +25,7 @@ SRCS = main.c\
 		parser.c\
 		parse_texture.c\
 		parse_map.c\
+		parse_map_utils.c\
 
 # A list of all .o files that correspond to the .c files
 OBJS = $(SRCS:.c=.o)
