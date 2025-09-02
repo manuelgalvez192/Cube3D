@@ -6,7 +6,7 @@
 /*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 18:06:33 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/01 18:07:52 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/02 20:06:15 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char **grow_map_array(char **old, int count, int new_cap)
 
     new = malloc(sizeof(char *) * new_cap);
     if (!new)
-        return (NULL);
+        return (printf("Error\nFallo al asignar memoria para el mapa\n"), NULL);
     for (int i = 0; i < count; ++i)
         new[i] = old[i];
     if (old)
@@ -42,17 +42,40 @@ int process_map_char(char c, int *in_map, int *saw_space, int *has_map_char)
     else if (is_map_char(c))
     {
         if (*saw_space)
-        {
-            printf("Caracter invalido: espacio en mitad de línea\n");
-            return (0);
-        }
+            return 0;
         *has_map_char = 1;
         *in_map = 1;
     }
     else
-    {
-        printf("Caracter invalido en el mapa: '%c'\n", c);
-        return (0);
-    }
-    return (1);
+        return 0;
+    return 1;
 }
+
+int is_valid_map_line(char *line, t_config *config)
+{
+    int has_map_char;
+    int in_map;
+    int saw_space_after_map;
+    char c;
+    char *p;
+
+    if (!line)
+        return (error_msg("Error\nMapa contiene línea inválida\n", config), 0);
+    has_map_char = 0;
+    in_map = 0;
+    saw_space_after_map = 0;
+    p = line;
+    while (*p && *p != '\n')
+    {
+        c = *p;
+        if (!process_map_char(c, &in_map, &saw_space_after_map, &has_map_char))
+        {
+            if (config->map_rows > 0)
+                return (error_msg("Error\nMapa contiene línea inválida\n", config), 0);
+            return 0;
+        }
+        p++;
+    }
+    return (has_map_char);
+}
+

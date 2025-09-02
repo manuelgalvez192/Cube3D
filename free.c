@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:18:17 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/01 01:26:38 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/02 20:30:05 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
+
+void drain_gnl(int fd)
+{
+    char *tmp;
+    while ((tmp = get_next_line(fd)))
+        free(tmp);
+}
 
 void free_partial_map(char **map, int count)
 {
@@ -38,7 +45,7 @@ void free_split(char **split)
 
 void	error_msg(char *msg, t_config *config)
 {
-	perror(msg);
+	printf("%s", msg);
 	free_config(&config);
 	exit(1);
 }

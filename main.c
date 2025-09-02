@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:33:27 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/01 00:57:06 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/02 19:30:26 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 // Muestra el mapa en consola (para debug)
 void show_map(t_config *config)
 {
-	printf("Mapa (%d filas):\n", config->map_rows);
-	for (int i = 0; i < config->map_rows; ++i)
-	{
-		printf("%s", config->map[i]);
-	}
-}	
+    printf("Mapa (%d filas):\n", config->map_rows);
+    for (int i = 0; i < config->map_rows; ++i)
+    {
+        printf("%s", config->map[i]);
+    }
+}
+
 
 bool check_extension(const char *file_name, const char *extension)
 {
@@ -55,4 +56,3 @@ int	main(int argc, char **argv)
 	free_config(&config);
 	return (0);
 }
-

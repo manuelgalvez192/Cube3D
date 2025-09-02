@@ -6,7 +6,7 @@
 /*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/01 18:13:07 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/02 20:55:09 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "./libft/libft.h"
 # include "./MLX42/include/MLX42/MLX42.h"
 # include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
 
 typedef struct s_color
 {
@@ -46,10 +48,10 @@ typedef struct s_config
 bool	check_extension(const char *file_name, const char *extension);
 
 /* --- PARSER --- */
-int handle_texture_and_color(char *trimmed, t_config *config);
+int		handle_texture_and_color(char *trimmed, t_config *config);
+int 	process_header_line(char *line, t_config *config, char **map_line);
 int		parse_header(int fd, t_config *config, char **map_line);
 void	parse_file(t_config *config, int fd);
-void	parse_map(int fd, char *first_line, t_config *config);
 
 /* --- PARSE TEXTURE --- */
 int		get_identifier(char *line);
@@ -59,16 +61,23 @@ int		parse_rgb(char *str, t_color *color);
 int		parse_color_line(char *line, t_config *config);
 
 /* --- PARSE MAP --- */
-int		is_map_char(char c);
-int		process_map_char(char c, int *in_map, int *saw_space_after_map, int *has_map_char);
-int		is_valid_map_line(char *line);
+bool	reading_map(int *capacity, int fd, char ***tmp_ptr, t_config *config);
+void	parse_map(int fd, char *first_line, t_config *config);
+int 	count_map_rows_and_capture_first(int fd, t_config *config, char **first_line_out);
+bool 	populate_map_from_fd(int fd, int rows, char *first_line, t_config *config);
+bool 	fill_map_from_file(const char *path, int rows, char *first_line, t_config *config);
+
+/* --- PARSE MAP UTILS --- */
 char	**grow_map_array(char **old, int count, int new_cap);
+int		is_map_char(char c);
+int 	process_map_char(char c, int *in_map, int *saw_space, int *has_map_char);
+int 	is_valid_map_line(char *line, t_config *config);
 
 /* --- FREE --- */
 void	free_partial_map(char **map, int count);
 void	free_split(char **split);
 void	error_msg(char *msg, t_config *config);
 void	free_config(t_config **config);
-char **grow_map_array(char **old, int count, int new_cap);
-int process_map_char(char c, int *in_map, int *saw_space, int *has_map_char);
+void	drain_gnl(int fd);
+
 #endif
