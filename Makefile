@@ -8,7 +8,7 @@ LIBMLX	:= ./MLX42
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 # The C compiler to use
-CC = gcc -g3
+CC = cc -g3
 
 # The flags to use with the archiver
 ARFLAGS = -rc
