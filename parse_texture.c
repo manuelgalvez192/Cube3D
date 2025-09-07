@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:52:58 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/02 20:26:05 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/07 19:03:41 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-int get_identifier(char *line)
+int	get_identifier(char *line)
 {
 	if (ft_strncmp(line, "NO ", 3) == 0)
 		return (1);
@@ -25,50 +25,50 @@ int get_identifier(char *line)
 	return (0);
 }
 
-void path_maker(t_config *config, char *line, int id)
+void	path_maker(t_config *config, char *line, int id)
 {
-    char    *path;
-    
-    path = ft_strdup(line);
-    if (!path)
-    {
-        printf("Error\nFallo al asignar memoria\n");
-        return ;
-    }
-    if (id == 1)
-        config->no_texture = path;
-    else if (id == 2)
-        config->so_texture = path;
-    else if (id == 3)
-        config->we_texture = path;
-    else if (id == 4)
-        config->ea_texture = path;
-    free(path);
+	char	*path;
+	
+	path = ft_strdup(line);
+	if (!path)
+	{
+		printf("Error\nFallo al asignar memoria\n");
+		return ;
+	}
+	if (id == 1)
+		config->no_texture = path;
+	else if (id == 2)
+		config->so_texture = path;
+	else if (id == 3)
+		config->we_texture = path;
+	else if (id == 4)
+		config->ea_texture = path;
+	free(path);
 }
 
-int parse_texture_line(char *line, t_config *config)
+int	parse_texture_line(char *line, t_config *config)
 {
-    int id;
+	int	id;
 
-    id = get_identifier(line);
-    if (id == 0)
-    {
-        if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E')
-            return (printf("Error\nIdentificador de textura inválido\n"), -1);
-        return 0;
-    }
-    if (line[2] != ' ' && line[2] != '\t')
-        return (printf("Error\nFormato inválido: espacio requerido después del identificador de textura\n"), -1);
-    line += 2;
-    while (*line == ' ' || *line == '\t')
-        line++;
-    if (*line == '\0')
-        return (printf("Error\nFalta path en textura\n"), -1);
-    path_maker(config, line, id);
-    return 1;
+	id = get_identifier(line);
+	if (id == 0)
+	{
+		if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E')
+			return (printf("Error\nIdentificador de textura inválido\n"), -1);
+		return (0);
+	}
+	if (line[2] != ' ' && line[2] != '\t')
+		return (printf("Error\nFormato inválido: espacio requerido después del identificador de textura\n"), -1);
+	line += 2;
+	while (*line == ' ' || *line == '\t')
+		line++;
+	if (*line == '\0')
+		return (printf("Error\nFalta path en textura\n"), -1);
+	path_maker(config, line, id);
+	return (1);
 }
 
-int parse_rgb(char *str, t_color *color)
+int	parse_rgb(char *str, t_color *color)
 {
 	char	**components;
 
@@ -86,30 +86,30 @@ int parse_rgb(char *str, t_color *color)
 	return (0);
 }
 
-int parse_color_line(char *line, t_config *config)
+int	parse_color_line(char *line, t_config *config)
 {
-    if (line[0] == 'F')
-    {
-        if (line[1] != ' ' && line[1] != '\t')
-            return (printf("Error\nFormato inválido: espacio requerido después de F\n"), -1);
-        line++;
-        while (*line == ' ' || *line == '\t')
-            line++;
-        if (parse_rgb(line, &config->floor) == -1)
-            return -1;
-        return 1;
-    }
-    if (line[0] == 'C')
-    {
-        if (line[1] != ' ' && line[1] != '\t')
-            return (printf("Error\nFormato inválido: espacio requerido después de C\n"), -1);
-        line++;
-        while (*line == ' ' || *line == '\t')
-            line++;
-        if (parse_rgb(line, &config->ceiling) == -1)
-            return -1;
-        return 1;
-    }
-    return 0;
+	if (line[0] == 'F')
+	{
+		if (line[1] != ' ' && line[1] != '\t')
+			return (printf("Error\nFormato inválido: espacio requerido después de F\n"), -1);
+		line++;
+		while (*line == ' ' || *line == '\t')
+			line++;
+		if (parse_rgb(line, &config->floor) == -1)
+			return (-1);
+		return (1);
+	}
+	if (line[0] == 'C')
+	{
+		if (line[1] != ' ' && line[1] != '\t')
+			return (printf("Error\nFormato inválido: espacio requerido después de C\n"), -1);
+		line++;
+		while (*line == ' ' || *line == '\t')
+			line++;
+		if (parse_rgb(line, &config->ceiling) == -1)
+			return (-1);
+		return (1);
+	}
+	return (0);
 }
 

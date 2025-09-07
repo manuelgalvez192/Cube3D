@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:33:27 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/02 19:30:26 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/07 17:51:48 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ void show_map(t_config *config)
     }
 }
 
-
-bool check_extension(const char *file_name, const char *extension)
+bool	check_extension(const char *file_name, const char *extension)
 {
-	size_t file_len = ft_strlen(file_name);
-	size_t ext_len = ft_strlen(extension);
+	size_t	file_len;
+	size_t	ext_len;
+
+	file_len = ft_strlen(file_name);
+	ext_len = ft_strlen(extension);
 	if (file_len < ext_len)
 		return (false);
 	return (ft_strncmp(file_name + file_len - ext_len, extension, ext_len));

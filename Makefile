@@ -25,7 +25,7 @@ SRCS = main.c\
 		parser.c\
 		parse_texture.c\
 		parse_map.c\
-		parse_map_utils.c\
+		check_chars.c
 
 # A list of all .o files that correspond to the .c files
 OBJS = $(SRCS:.c=.o)

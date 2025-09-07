@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/02 20:55:09 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/07 19:09:32 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ bool	check_extension(const char *file_name, const char *extension);
 
 /* --- PARSER --- */
 int		handle_texture_and_color(char *trimmed, t_config *config);
-int 	process_header_line(char *line, t_config *config, char **map_line);
-int		parse_header(int fd, t_config *config, char **map_line);
+int		process_config_line(char *line, t_config *config, char **first_line_out);
+int		count_remaining_map_lines(int fd, t_config *config);
+int		count_map_rows_and_capture_first(int fd, t_config *config, char **first_line_out);
 void	parse_file(t_config *config, int fd);
 
 /* --- PARSE TEXTURE --- */
@@ -61,23 +62,21 @@ int		parse_rgb(char *str, t_color *color);
 int		parse_color_line(char *line, t_config *config);
 
 /* --- PARSE MAP --- */
-bool	reading_map(int *capacity, int fd, char ***tmp_ptr, t_config *config);
-void	parse_map(int fd, char *first_line, t_config *config);
-int 	count_map_rows_and_capture_first(int fd, t_config *config, char **first_line_out);
-bool 	populate_map_from_fd(int fd, int rows, char *first_line, t_config *config);
-bool 	fill_map_from_file(const char *path, int rows, char *first_line, t_config *config);
+int		is_valid_map_line(char *line, t_config *config);
+bool	populate_map_from_fd(int fd, int rows, char *first_line, t_config *config);
+bool	fill_map_from_file(const char *path, int rows, char *first_line, t_config *config);
 
-/* --- PARSE MAP UTILS --- */
-char	**grow_map_array(char **old, int count, int new_cap);
-int		is_map_char(char c);
-int 	process_map_char(char c, int *in_map, int *saw_space, int *has_map_char);
-int 	is_valid_map_line(char *line, t_config *config);
+/* --- CHECK CHARS --- */
+int		check_single_spawn(t_config *config);
+int		is_valid_neighbor(char c);
+int		check_neighbors(t_config *config, int i, int j);
+int		check_invalid_spaces(t_config *config);
 
 /* --- FREE --- */
+void	drain_gnl(int fd);
 void	free_partial_map(char **map, int count);
 void	free_split(char **split);
 void	error_msg(char *msg, t_config *config);
 void	free_config(t_config **config);
-void	drain_gnl(int fd);
 
 #endif
