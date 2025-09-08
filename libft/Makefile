@@ -2,7 +2,7 @@
 NAME = libft.a
 
 # The C compiler to use
-CC = gcc
+CC = cc
 
 # The archiver to use
 AR = ar
@@ -74,15 +74,15 @@ all: $(NAME)
 
 # A rule to build the library from the .o files
 $(NAME): $(OBJS)
-	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
+	@$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 
 # A rule to remove all .o files
 clean:
-	$(RM) $(OBJS)
+	@$(RM) $(OBJS)
 
 # A rule to remove all .o files and the library
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 # A rule to rebuild everything from scratch
 re: fclean all

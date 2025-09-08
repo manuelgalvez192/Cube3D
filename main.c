@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:33:27 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/07 17:51:48 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/08 01:06:55 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // Muestra el mapa en consola (para debug)
 void show_map(t_config *config)
 {
-    printf("Mapa (%d filas):\n", config->map_rows);
+    printf("Mapa (%d filas, %d columnas):\n", config->map_rows, config->map_width);
     for (int i = 0; i < config->map_rows; ++i)
     {
         printf("%s", config->map[i]);
@@ -55,6 +55,7 @@ int	main(int argc, char **argv)
 	parse_file(config, fd);
 	show_map(config);
 	close(fd);
+	run_game(config);
 	free_config(&config);
 	return (0);
 }

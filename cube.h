@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/07 19:09:32 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/08 04:47:52 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+# define WIDTH			1280
+# define HEIGHT			720
+# define TILE_SIZE		10
+# define MINIMAP_RATIO	0.35f
+# define MINIMAP_MARGIN	10
+# define BORDER_COLOR 0x000000FF
+
 typedef struct s_color
 {
 	int	r;
@@ -26,22 +33,35 @@ typedef struct s_color
 	int	b;
 }	t_color;
 
+typedef struct  s_minimap
+{
+	mlx_image_t	*img2d;
+	int			tile;
+	int			width;
+	int			height;
+	int			x_off;
+	int			y_off;
+}	t_minimap;
+
 typedef struct s_config
 {
-	char	*no_texture;
-	char	*so_texture;
-	char	*we_texture;
-	char	*ea_texture;
-	t_color	floor;
-	t_color	ceiling;
-	char	**map;
-	int		map_rows;
-	int		map_width;
-	int		map_height;
-	int		player_x;
-	int		player_y;
-	char	player_dir;
-	char	*file_path;
+	char		*no_texture;
+	char		*so_texture;
+	char		*we_texture;
+	char		*ea_texture;
+	t_color		floor;
+	t_color		ceiling;
+	char		**map;
+	int			map_rows;
+	int			map_width;
+	int			map_height;
+	int			player_x;
+	int			player_y;
+	char		player_dir;
+	char		*file_path;
+	mlx_t		*mlx;
+	mlx_image_t	*img3d;
+	t_minimap	minimap;
 }	t_config;
 
 /* --- MAIN --- */
@@ -71,6 +91,26 @@ int		check_single_spawn(t_config *config);
 int		is_valid_neighbor(char c);
 int		check_neighbors(t_config *config, int i, int j);
 int		check_invalid_spaces(t_config *config);
+
+/* --- MLX --- */
+void	put_pixel_safe(mlx_image_t *img, int x, int y, uint32_t color);
+void	clear_image(mlx_image_t *img);
+void	on_resize(int new_w, int new_h, void *param);
+void	run_game(t_config *config);
+
+/* --- RENDER --- */
+void	render(void *param);
+
+/* --- 3D --- */
+void	render3d(t_config *config);
+
+/* --- 2D --- */
+void	draw_square(int x, int y, int size, uint32_t color, mlx_image_t *img);
+void	draw_square_border(int x, int y, int size, uint32_t color, mlx_image_t *img);
+void	draw_map_on_image(t_config *config);
+void	compute_minimap(t_config *config);
+void	compute_map_dims(t_config *config);
+void	render2d(void *param);
 
 /* --- FREE --- */
 void	drain_gnl(int fd);

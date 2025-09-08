@@ -20,12 +20,17 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 # A list of all .c files in the current directory
-SRCS = main.c\
-		free.c\
-		parser.c\
-		parse_texture.c\
-		parse_map.c\
-		check_chars.c
+SRCS = main.c					\
+		free.c					\
+		parser.c				\
+		parse_texture.c			\
+		parse_map.c				\
+		check_chars.c			\
+		mlx.c					\
+		render/render.c			\
+		render/3d/render3d.c	\
+		render/2d/draw.c		\
+		render/2d/render2d.c	\
 
 # A list of all .o files that correspond to the .c files
 OBJS = $(SRCS:.c=.o)
@@ -38,27 +43,27 @@ all: $(NAME)
 
 # A rule to build the project from the .o files
 $(NAME): $(LIBFT_LIB) $(MLX_LIB) libmlx $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME) $(LIBFT_LIB) $(LDFLAGS)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME) $(LIBFT_LIB) $(LDFLAGS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) -o $@ -c $<
 
 $(LIBFT_LIB):
-	make -C $(LIBFT) -f Makefile
+	@make -C $(LIBFT) -f Makefile
 
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 # A rule to remove all .o files
 clean:
-	$(RM) $(OBJS)
-	make -C $(LIBFT) clean
-	make -C $(LIBMLX)/build clean
+	@$(RM) $(OBJS)
+	@make -C $(LIBFT) clean
+	@make -C $(LIBMLX)/build clean
 
 # A rule to remove all .o files and the project
 fclean: clean
-	$(RM) $(NAME)
-	make -C $(LIBFT) fclean
+	@$(RM) $(NAME)
+	@make -C $(LIBFT) fclean
 
 # A rule to rebuild everything from scratch
 re: fclean all
