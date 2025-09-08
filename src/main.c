@@ -6,20 +6,25 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:33:27 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/08 06:47:54 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/08 07:41:50 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
 
 // Muestra el mapa en consola (para debug)
-void show_map(t_config *config)
+void	show_map(t_config *config)
 {
-    printf("Mapa (%d filas, %d columnas):\n", config->map_rows, config->map_width);
-    for (int i = 0; i < config->map_rows; ++i)
-    {
-        printf("%s", config->map[i]);
-    }
+	int	i;
+
+	i = 0;
+	printf("Mapa (%d filas, %d columnas):\n",
+		config->map_rows, config->map_width);
+	while (i < config->map_rows)
+	{
+		printf("%s", config->map[i]);
+		i++;
+	}
 }
 
 bool	check_extension(const char *file_name, const char *extension)

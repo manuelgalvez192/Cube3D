@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/08 06:29:03 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/08 07:28:21 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_color
 
 typedef struct  s_minimap
 {
-	mlx_image_t	*img2d;
+	mlx_image_t	*img;
 	int			tile;
 	int			width;
 	int			height;
@@ -107,8 +107,8 @@ void	render(void *param);
 void	render3d(t_config *config);
 
 /* --- 2D --- */
-void	draw_square(int x, int y, int size, uint32_t color, mlx_image_t *img);
-void	draw_square_border(int x, int y, int size, uint32_t color, mlx_image_t *img);
+void	draw_fill_sq(int x, int y, int size, mlx_image_t *img);
+void	draw_square(int x, int y, int size, mlx_image_t *img);
 void	draw_map_on_image(t_config *config);
 void	compute_minimap(t_config *config);
 void	compute_map_dims(t_config *config);

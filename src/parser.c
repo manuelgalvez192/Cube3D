@@ -6,11 +6,12 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:05:59 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/08 06:48:11 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/08 07:39:09 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
+#include "../strings.h"
 
 int	handle_texture_and_color(char *trimmed, t_config *config)
 {
@@ -74,7 +75,8 @@ int	count_remaining_map_lines(int fd, t_config *config)
 	return (count);
 }
 
-int	count_map_rows_and_capture_first(int fd, t_config *config, char **first_line_out)
+int	count_map_rows_and_capture_first(int fd, t_config *config,
+	char **first_line_out)
 {
 	char	*line;
 	int		ret;
@@ -114,17 +116,18 @@ void	parse_file(t_config *config, int fd)
 	{
 		if (first_line)
 			free(first_line);
-		error_msg("Error\nFallo al parsear el header o mapa\n", config);
+		error_msg(MSG_ERR_PARSE_HEADER_OR_MAP, config);
 		return ;
 	}
 	if (rows == 0 || !first_line)
 	{
-		if (first_line) free(first_line);
-		error_msg("Error\nMapa no encontrado\n", config);
+		if (first_line)
+			free(first_line);
+		error_msg(MSG_ERR_MAP_NOT_FOUND, config);
 		return ;
 	}
 	if (!fill_map_from_file(config->file_path, rows, first_line, config))
 		return ;
 	if (!check_single_spawn(config))
-		error_msg("Error\nEl mapa debe tener exactamente un punto de inicio\n", config);
+		error_msg(MSG_ERR_MAP_NOT_STARTING_POINT, config);
 }

@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 04:57:55 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/08 06:47:23 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/08 07:25:15 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	put_pixel_safe(mlx_image_t *img, int x, int y, uint32_t color)
 	mlx_put_pixel(img, x, y, color);
 }
 
-void clear_image(mlx_image_t *img)
+void	clear_image(mlx_image_t *img)
 {
-	size_t pixels;
-	
+	size_t	pixels;
+
 	pixels = (size_t)img->width * img->height;
 	ft_memset(img->pixels, 0, pixels * sizeof(uint32_t));
 }
@@ -42,8 +42,10 @@ void	init_images(t_config *config)
 	config->img3d = mlx_new_image(config->mlx, win_w, win_h);
 	mlx_image_to_window(config->mlx, config->img3d, 0, 0);
 	compute_minimap(config);
-	config->minimap.img2d = mlx_new_image(config->mlx, config->minimap.width, config->minimap.height);
-	mlx_image_to_window(config->mlx, config->minimap.img2d,
+	config->minimap.img = mlx_new_image(config->mlx,
+			config->minimap.width,
+			config->minimap.height);
+	mlx_image_to_window(config->mlx, config->minimap.img,
 		config->minimap.x_off, config->minimap.y_off);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 03:33:05 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/08 06:47:39 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/08 07:35:00 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	render3d(t_config *config)
 {
-	draw_square(0, 0, 2000, 0xFFFFFFFF, config->img3d);
+	draw_fill_sq(0, 0, 2000, config->img3d);
 }

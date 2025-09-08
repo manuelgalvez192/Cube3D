@@ -6,29 +6,31 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 03:20:43 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/08 06:48:00 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/08 07:03:02 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
+#include "../strings.h"
 
-int is_valid_map_line(char *line, t_config *config)
+int	is_valid_map_line(char *line, t_config *config)
 {
 	int		has_map_char;
-	char 	*p;
+	char	*p;
 
 	has_map_char = 0;
 	p = line;
 	if (!line)
-		return (error_msg("Error\nMapa contiene línea inválida\n", config), 0);
+		return (error_msg(MSG_ERR_INVALID_LINE, config), 0);
 	while (*p && *p != '\n')
 	{
-		if (*p == '0' || *p == '1' || *p == 'N' || *p == 'S' || *p == 'E' || *p == 'W')
+		if (*p == '0' || *p == '1' || *p == 'N'
+			|| *p == 'S' || *p == 'E' || *p == 'W')
 			has_map_char = 1;
 		else if (*p != ' ' && *p != '\t')
 		{
 			if (config->map_rows > 0)
-				return (error_msg("Error\nMapa contiene carácter inválido\n", config), 0);
+				return (error_msg(MSG_ERR_INVALID_CHAR, config), 0);
 			return (0);
 		}
 		p++;
@@ -36,7 +38,8 @@ int is_valid_map_line(char *line, t_config *config)
 	return (has_map_char);
 }
 
-bool	populate_map_from_fd(int fd, int rows, char *first_line, t_config *config)
+bool	populate_map_from_fd(int fd, int rows, char *first_line,
+	t_config *config)
 {
 	char	*line;
 	int		idx;
@@ -58,30 +61,31 @@ bool	populate_map_from_fd(int fd, int rows, char *first_line, t_config *config)
 			config->map[idx++] = line;
 	}
 	if (idx != rows)
-		return (error_msg("Error\nConteo de filas no coincide\n", config), false);
+		return (error_msg(MSG_ERR_ROW_COUNT_DONT_MATCH, config), false);
 	return (true);
 }
 
-bool	fill_map_from_file(const char *path, int rows, char *first_line, t_config *config)
+bool	fill_map_from_file(const char *path, int rows, char *first_line,
+	t_config *config)
 {
 	int		fd;
 	bool	ok;
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (error_msg("Error\nNo se pudo reabrir el archivo\n", config), false);
+		return (error_msg(MSG_ERR_OPENING_FILE, config), false);
 	config->map = malloc(sizeof(char *) * (rows + 1));
 	if (!config->map)
 	{
 		close(fd);
-		return (error_msg("Error\nFallo malloc mapa\n", config), false);
+		return (error_msg(MSG_ERR_MALLOC_MAP, config), false);
 	}
 	ok = populate_map_from_fd(fd, rows, first_line, config);
 	config->map[rows] = NULL;
 	config->map_rows = rows;
 	close(fd);
 	if (!check_single_spawn(config) || !check_invalid_spaces(config))
-		error_msg("Error\nMapa inválido\n", config);
+		error_msg(MSG_ERR_INVALID_MAP, config);
 	return (ok);
 }
 

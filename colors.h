@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
+/*   colors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 02:05:00 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/08 07:29:40 by mcaro-ro         ###   ########.fr       */
+/*   Created: 2025/09/08 07:17:43 by mcaro-ro          #+#    #+#             */
+/*   Updated: 2025/09/08 07:43:07 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cube.h"
+#ifndef COLORS_H
+# define COLORS_H
 
-void	render(void *param)
-{
-	t_config	*config;
+# define COLOR_PLACE_HOLDER	0xFF0000FF
 
-	config = param;
-	clear_image(config->img3d);
-	render3d(config);
-	if (config->minimap.visibility == true)
-	{
-		compute_minimap(config);
-		clear_image(config->minimap.img);
-		draw_map_on_image(config);
-	}
-	else
-		clear_image(config->minimap.img);
-}
+# define COLOR_TRANSPARENT	0x0000000F
+# define COLOR_WHITE		0xFFFFFFFF
+# define COLOR_BLACK		0x000000FF
+
+#endif
