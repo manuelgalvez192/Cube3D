@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_chars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 17:38:04 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/07 19:08:30 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/08 06:47:48 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "../cube.h"
 
 int	check_single_spawn(t_config *config)
 {

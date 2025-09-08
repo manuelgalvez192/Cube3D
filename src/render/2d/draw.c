@@ -6,11 +6,11 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 01:21:53 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/08 04:52:44 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/08 06:47:30 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cube.h"
+#include "../../../cube.h"
 
 void	draw_square(int x, int y, int size, uint32_t color, mlx_image_t *img)
 {
@@ -86,8 +86,8 @@ void	draw_map_on_image(t_config *config)
 		{
 			if (config->map[i][j] == '1')
 			{
-				draw_square(j * ts, i * ts, ts, 0xF0F0FF0F, config->minimap.img2d);
-				draw_square_border(j * ts, i * ts, ts, 0x00000000, config->minimap.img2d);
+				draw_square(j * ts, i * ts, ts, 0x0000000F, config->minimap.img2d);
+				draw_square_border(j * ts, i * ts, ts + 1, 0x000000F0, config->minimap.img2d);
 			}
 			j++;
 		}

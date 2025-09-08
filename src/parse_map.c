@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 03:20:43 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/07 19:06:37 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/08 06:48:00 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "../cube.h"
 
 int is_valid_map_line(char *line, t_config *config)
 {
@@ -83,4 +83,25 @@ bool	fill_map_from_file(const char *path, int rows, char *first_line, t_config *
 	if (!check_single_spawn(config) || !check_invalid_spaces(config))
 		error_msg("Error\nMapa inválido\n", config);
 	return (ok);
+}
+
+void	compute_map_dims(t_config *config)
+{
+	int		i;
+	size_t	len;
+	int		max_w;
+
+	max_w = 0;
+	i = 0;
+	while (i < config->map_rows)
+	{
+		len = ft_strlen(config->map[i]) - 1;
+		if ((int)len > max_w)
+			max_w = (int)len;
+		i++;
+	}
+	if (max_w < 1)
+		config->map_width = 1;
+	else
+		config->map_width = max_w;
 }

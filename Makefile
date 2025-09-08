@@ -20,17 +20,18 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 # A list of all .c files in the current directory
-SRCS = main.c					\
-		free.c					\
-		parser.c				\
-		parse_texture.c			\
-		parse_map.c				\
-		check_chars.c			\
-		mlx.c					\
-		render/render.c			\
-		render/3d/render3d.c	\
-		render/2d/draw.c		\
-		render/2d/render2d.c	\
+SRCS = src/main.c					\
+		src/free.c					\
+		src/parser.c				\
+		src/parse_texture.c			\
+		src/parse_map.c				\
+		src/check_chars.c			\
+		src/mlx/mlx.c				\
+		src/mlx/hooks.c				\
+		src/render/render.c			\
+		src/render/3d/render3d.c	\
+		src/render/2d/draw.c		\
+		src/render/2d/minimap.c		\
 
 # A list of all .o files that correspond to the .c files
 OBJS = $(SRCS:.c=.o)

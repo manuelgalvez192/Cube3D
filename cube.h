@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/08 04:47:52 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/08 06:29:03 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct  s_minimap
 	int			height;
 	int			x_off;
 	int			y_off;
+	bool		visibility;
 }	t_minimap;
 
 typedef struct s_config
@@ -96,6 +97,7 @@ int		check_invalid_spaces(t_config *config);
 void	put_pixel_safe(mlx_image_t *img, int x, int y, uint32_t color);
 void	clear_image(mlx_image_t *img);
 void	on_resize(int new_w, int new_h, void *param);
+void	on_key(mlx_key_data_t keydata, void *param);
 void	run_game(t_config *config);
 
 /* --- RENDER --- */

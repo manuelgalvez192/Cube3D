@@ -6,11 +6,11 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 04:57:55 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/08 04:39:13 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/08 06:47:23 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "../../cube.h"
 
 void	put_pixel_safe(mlx_image_t *img, int x, int y, uint32_t color)
 {
@@ -30,23 +30,6 @@ void clear_image(mlx_image_t *img)
 	
 	pixels = (size_t)img->width * img->height;
 	ft_memset(img->pixels, 0, pixels * sizeof(uint32_t));
-}
-
-void on_resize(int new_w, int new_h, void *param)
-{
-	t_config	*config;
-
-	config = param;
-	if (new_w < 1)
-		new_w = 1;
-	if (new_h < 1)
-		new_h = 1;
-	mlx_resize_image(config->img3d, new_w, new_h);
-	compute_minimap(config);
-	mlx_delete_image(config->mlx, config->minimap.img2d);
-	config->minimap.img2d = mlx_new_image(config->mlx, config->minimap.width, config->minimap.height);
-	mlx_image_to_window(config->mlx, config->minimap.img2d,
-		config->minimap.x_off, config->minimap.y_off);
 }
 
 void	init_images(t_config *config)
@@ -70,6 +53,8 @@ void	run_game(t_config *config)
 	mlx_set_setting(MLX_MAXIMIZED, true);
 	config->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
 	init_images(config);
+	config->minimap.visibility = true;
+	mlx_key_hook(config->mlx, on_key, config);
 	mlx_resize_hook(config->mlx, on_resize, config);
 	mlx_loop_hook(config->mlx, render, config);
 	mlx_loop(config->mlx);
