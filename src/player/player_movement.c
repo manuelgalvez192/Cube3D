@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 05:50:43 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 20:28:21 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 21:20:54 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ void	update_player_movement(t_config *config)
 		dx /= len;
 		dy /= len;
 		if (is_walkable_radius(config,
-			config->player_x + dx * PLAYER_SPEED,
-			config->player_y))
+				config->player_x + dx * PLAYER_SPEED,
+				config->player_y))
 			config->player_x += dx * PLAYER_SPEED;
 		if (is_walkable_radius(config,
-			config->player_x,
-			config->player_y + dy * PLAYER_SPEED))
+				config->player_x,
+				config->player_y + dy * PLAYER_SPEED))
 			config->player_y += dy * PLAYER_SPEED;
 	}
 }
@@ -66,9 +66,9 @@ void	update_player_movement(t_config *config)
 void	update_player_rotation_keys(t_config *config)
 {
 	if (config->player_move.rotate_left)
-		config->player_angle -= ROT_SPEED;
+		config->player_angle -= PLAYER_ROT_SPEED;
 	if (config->player_move.rotate_right)
-		config->player_angle += ROT_SPEED;
+		config->player_angle += PLAYER_ROT_SPEED;
 	if (config->player_angle > 2 * M_PI)
 		config->player_angle = 0;
 	if (config->player_angle < 0)

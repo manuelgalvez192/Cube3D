@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 01:21:53 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 07:09:10 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 22:54:41 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void	draw_cell(t_config *config, int i, int j)
 	rect.y = i * config->minimap.tile;
 	rect.size = config->minimap.tile;
 	draw_fill_sq(rect, COLOR_MINIMAP, config->minimap.img);
-	rect.size = config->minimap.tile + 1;
 	draw_square(rect, COLOR_MINIMAP_BORDER, config->minimap.img);
 }
 
@@ -70,15 +69,13 @@ void	draw_map_on_image(t_config *config)
 {
 	int		i;
 	int		j;
-	size_t	len;
 
 	i = 0;
 	clear_image(config->minimap.img);
 	while (i < config->map_rows)
 	{
-		len = ft_strlen(config->map[i]);
 		j = 0;
-		while (j < (int)len)
+		while (j < config->map_width)
 		{
 			if (config->map[i][j] == '1')
 				draw_cell(config, i, j);

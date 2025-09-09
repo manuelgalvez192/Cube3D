@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 07:17:43 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 09:02:28 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 22:57:43 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define COLOR_PLACE_HOLDER		0xF0F0F00F
 
-# define COLOR_MINIMAP			0x000000FF
+# define COLOR_MINIMAP			0x0F000FFF
 # define COLOR_MINIMAP_PLAYER	0x00FF00FF
 # define COLOR_MINIMAP_BORDER	0xFFFFFFFF
 

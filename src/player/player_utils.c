@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 06:00:04 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 20:34:05 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 22:18:56 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,14 @@ static bool	is_cell_walkable(t_config *config, int mx, int my)
 		return (false);
 	return (config->map[my][mx] == '0');
 }
+
 bool	is_walkable(t_config *config, float x, float y)
 {
 	int	int_x;
 	int	int_y;
 
-	int_x = (int)floor(x);
-	int_y = (int)floor(y);
+	int_x = (int)floorf(x);
+	int_y = (int)floorf(y);
 	return (is_cell_walkable(config, int_x, int_y));
 }
 
@@ -52,8 +53,8 @@ bool	is_walkable_radius(t_config *config, float x, float y)
 
 	if (PLAYER_RADIUS <= 0.0f)
 		return (is_walkable(config,
-			(x + PLAYER_CENTER_OFF),
-			(y + PLAYER_CENTER_OFF)));
+				(x + PLAYER_CENTER_OFF),
+				(y + PLAYER_CENTER_OFF)));
 	i = 0;
 	while (i <= 32)
 	{

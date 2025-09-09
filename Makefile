@@ -35,6 +35,7 @@ SRCS = src/main.c						\
 		src/mlx/hooks.c					\
 		src/render/render.c				\
 		src/render/3d/render3d.c		\
+		src/render/3d/texture.c			\
 		src/render/2d/draw.c			\
 		src/render/2d/square.c			\
 		src/render/2d/minimap.c			\

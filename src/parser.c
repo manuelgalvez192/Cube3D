@@ -6,12 +6,13 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:05:59 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/09 19:30:32 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 21:36:15 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
 #include "../strings.h"
+#include <math.h>
 
 int	handle_texture_and_color(char *trimmed, t_config *config)
 {
@@ -130,5 +131,5 @@ void	parse_file(t_config *config, int fd)
 		return ;
 	if (!check_single_spawn(config))
 		error_msg(MSG_ERR_MAP_NOT_STARTING_POINT, config);
-	config->map[(int)config->player_y][(int)config->player_x] = '0';
+	config->map[(int)floor(config->player_y)][(int)floor(config->player_x)] = '0';
 }

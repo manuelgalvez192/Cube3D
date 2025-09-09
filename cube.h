@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/09 20:33:17 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 23:37:47 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,27 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define WIDTH				1280
-# define HEIGHT				720
-# define TILE_SIZE			10
-# define MINIMAP_RATIO		0.45f
-# define MINIMAP_MARGIN		10
-# define M_PI				3.14159265358979323846f
-# define FOV				1.0471975511965977461542144610932f
-# define RAY_STEP			0.05f
-# define RAY_MAX_STEPS		100
-# define ROT_SPEED			0.05f
+/* --- PLAYER --- */
+# define PLAYER_ROT_SPEED	0.05f
 # define PLAYER_RADIUS		0.2f
 # define PLAYER_SPEED		0.05f
 # define PLAYER_CENTER_OFF	0.5f
+
+/* --- WINDOW --- */
+# define WIDTH				1280
+# define HEIGHT				720
+
+/* -- MINIMAP --- */
+# define TILE_SIZE			10
+# define MINIMAP_RATIO		0.45f
+# define MINIMAP_MARGIN		10
+
+/* --- RAYCASTING --- */
+# define M_PI				3.14159265358979323846f
+# define FOV				1.0471975511965977461542144610932f
+# define RAY_STEP			0.01f
+# define RAY_MAX_STEPS		100000
+# define OFFSET_EPSILON		0.0001f
 
 typedef struct s_color
 {
@@ -39,6 +47,12 @@ typedef struct s_color
 	int	g;
 	int	b;
 }	t_color;
+
+typedef struct s_texture
+{
+	mlx_texture_t	*wall;
+	mlx_texture_t	*door;
+}	t_texture;
 
 typedef struct s_rect
 {
@@ -91,8 +105,7 @@ typedef struct s_config
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	t_minimap		minimap;
-	double			last_time_ms;
-	double			delta_time;
+	t_texture		texture;
 }	t_config;
 
 /* --- MAIN --- */
@@ -139,6 +152,10 @@ void		render(void *param);
 
 /* --- 3D --- */
 void		render3d(t_config *config);
+int			get_wall_tex_x(t_config *config, float dist, float angle, bool hit_vertical);
+int			get_texture_pixel(mlx_texture_t *tex, int x, int y);
+void		draw_textured_column(t_config *config, int x,
+				int height, int tex_x);
 
 /* --- 2D --- */
 void		draw_fill_sq(t_rect rect, uint32_t color, mlx_image_t *img);
