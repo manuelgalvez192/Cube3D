@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 01:23:14 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/08 06:47:35 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 04:54:08 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void	compute_minimap_max(t_config *config)
 	int	max_w;
 	int	max_h;
 
-	win_w = (int)config->img3d->width;
-	win_h = (int)config->img3d->height;
+	win_w = (int)config->img->width;
+	win_h = (int)config->img->height;
 	max_w = (int)(win_w * MINIMAP_RATIO);
 	max_h = (int)(win_h * MINIMAP_RATIO);
 	config->minimap.width = max_w;
@@ -31,7 +31,7 @@ static void	compute_minimap_offset(t_config *config)
 {
 	int	win_w;
 
-	win_w = (int)config->img3d->width;
+	win_w = (int)config->img->width;
 	config->minimap.x_off = win_w - MINIMAP_MARGIN - config->minimap.width;
 	config->minimap.y_off = MINIMAP_MARGIN;
 }

@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 17:38:04 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/08 06:47:48 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 04:47:54 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,26 @@
 
 int	check_single_spawn(t_config *config)
 {
-	char	*row;
 	int		spawn_count;
 	int		i;
 	int		j;
 
-	spawn_count = 0;
 	i = 0;
+	spawn_count = 0;
 	while (i < config->map_rows)
 	{
-		row = config->map[i];
 		j = 0;
-		while (row[j])
+		while (config->map[i][j])
 		{
-			if (row[j] == 'N' || row[j] == 'S'
-				|| row[j] == 'E' || row[j] == 'W')
+			if (config->map[i][j] == 'N' || config->map[i][j] == 'S'
+				|| config->map[i][j] == 'E' || config->map[i][j] == 'W')
+			{
+				config->player_x = j;
+				config->player_y = i;
+				config->player_dir = config->map[i][j];
+				config->player_angle = get_initial_angle(config->player_dir);
 				spawn_count++;
+			}
 			j++;
 		}
 		i++;

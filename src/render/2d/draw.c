@@ -6,70 +6,64 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 01:21:53 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/08 07:43:19 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 07:09:10 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../cube.h"
 #include "../../../colors.h"
 
-void	draw_fill_sq(int x, int y, int size, mlx_image_t *img)
+static void	draw_cell(t_config *config, int i, int j)
 {
-	int	i;
-	int	j;
+	t_rect	rect;
 
-	i = 0;
-	while (i < size)
-	{
-		j = 0;
-		while (j < size)
-		{
-			put_pixel_safe(img, x + j, y + i, COLOR_PLACE_HOLDER);
-			j++;
-		}
-		i++;
-	}
+	rect.x = j * config->minimap.tile;
+	rect.y = i * config->minimap.tile;
+	rect.size = config->minimap.tile;
+	draw_fill_sq(rect, COLOR_MINIMAP, config->minimap.img);
+	rect.size = config->minimap.tile + 1;
+	draw_square(rect, COLOR_MINIMAP_BORDER, config->minimap.img);
 }
 
-void	draw_square(int x, int y, int size, mlx_image_t *img)
+void	draw_minimap_border(uint32_t color, t_minimap *minimap)
 {
-	int	i;
-
-	if (size <= 0)
-		return ;
-	i = 0;
-	while (i < size)
-	{
-		put_pixel_safe(img, x + i, y, COLOR_BLACK);
-		put_pixel_safe(img, x + i, y + size - 1, COLOR_BLACK);
-		put_pixel_safe(img, x, y + i, COLOR_BLACK);
-		put_pixel_safe(img, x + size - 1, y + i, COLOR_BLACK);
-		i++;
-	}
-}
-
-void	draw_minimap_border(int x, int y, t_minimap *minimap)
-{
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	t_rect	rect;
 
 	i = 0;
+	rect.x = 0;
+	rect.y = 0;
+	rect.w = minimap->width;
+	rect.h = minimap->height;
 	while (i < minimap->width)
 	{
-		put_pixel_safe(minimap->img, x + i, y,
-			BORDER_COLOR);
-		put_pixel_safe(minimap->img, x + i, y + minimap->height - 1,
-			BORDER_COLOR);
+		put_pixel_safe(minimap->img, rect.x + i, rect.y,
+			color);
+		put_pixel_safe(minimap->img, rect.x + i,
+			rect.y + minimap->height - 1, color);
 		i++;
 	}
 	j = 0;
 	while (j < minimap->height)
 	{
-		put_pixel_safe(minimap->img, x, y + j, BORDER_COLOR);
-		put_pixel_safe(minimap->img, x + minimap->width - 1, y + j,
-			BORDER_COLOR);
+		put_pixel_safe(minimap->img, rect.x, rect.y + j, color);
+		put_pixel_safe(minimap->img, rect.x + minimap->width - 1,
+			rect.y + j, color);
 		j++;
 	}
+}
+
+void	draw_player_on_minimap(t_config *config)
+{
+	t_rect	rect;
+	int		ts;
+
+	ts = config->minimap.tile;
+	rect.size = ts / 2;
+	rect.x = config->player_x * ts + (ts - rect.size) / 2;
+	rect.y = config->player_y * ts + (ts - rect.size) / 2;
+	draw_fill_sq(rect, COLOR_MINIMAP_PLAYER, config->minimap.img);
 }
 
 void	draw_map_on_image(t_config *config)
@@ -87,15 +81,12 @@ void	draw_map_on_image(t_config *config)
 		while (j < (int)len)
 		{
 			if (config->map[i][j] == '1')
-			{
-				draw_fill_sq(j * config->minimap.tile, i * config->minimap.tile,
-					config->minimap.tile, config->minimap.img);
-				draw_square(j * config->minimap.tile, i * config->minimap.tile,
-					config->minimap.tile + 1, config->minimap.img);
-			}
+				draw_cell(config, i, j);
 			j++;
 		}
 		i++;
 	}
-	draw_minimap_border(0, 0, &config->minimap);
+	draw_minimap_border(COLOR_MINIMAP_BORDER, &config->minimap);
+	draw_player_on_minimap(config);
+	draw_player_ray_cone(config);
 }

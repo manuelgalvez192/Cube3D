@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/08 07:28:21 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 07:26:38 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,13 @@
 # define WIDTH			1280
 # define HEIGHT			720
 # define TILE_SIZE		10
-# define MINIMAP_RATIO	0.35f
+# define MINIMAP_RATIO	0.45f
 # define MINIMAP_MARGIN	10
-# define BORDER_COLOR 0x000000FF
+# define M_PI			3.14159265358979323846f
+# define MOVE_SPEED		0.05f
+# define FOV			1.0471975511965977461542144610932f
+# define RAY_STEP		0.05f
+# define RAYS_NUM		100
 
 typedef struct s_color
 {
@@ -33,7 +37,16 @@ typedef struct s_color
 	int	b;
 }	t_color;
 
-typedef struct  s_minimap
+typedef struct s_rect
+{
+	int	x;
+	int	y;
+	int	size;
+	int	w;
+	int	h;
+}	t_rect;
+
+typedef struct s_minimap
 {
 	mlx_image_t	*img;
 	int			tile;
@@ -44,25 +57,37 @@ typedef struct  s_minimap
 	bool		visibility;
 }	t_minimap;
 
+typedef struct s_player_move
+{
+	bool	up;
+	bool	down;
+	bool	left;
+	bool	right;
+	bool	rotate_left;
+	bool	rotate_right;
+}	t_player_move;
+
 typedef struct s_config
 {
-	char		*no_texture;
-	char		*so_texture;
-	char		*we_texture;
-	char		*ea_texture;
-	t_color		floor;
-	t_color		ceiling;
-	char		**map;
-	int			map_rows;
-	int			map_width;
-	int			map_height;
-	int			player_x;
-	int			player_y;
-	char		player_dir;
-	char		*file_path;
-	mlx_t		*mlx;
-	mlx_image_t	*img3d;
-	t_minimap	minimap;
+	char			*no_texture;
+	char			*so_texture;
+	char			*we_texture;
+	char			*ea_texture;
+	t_color			floor;
+	t_color			ceiling;
+	char			**map;
+	int				map_rows;
+	int				map_width;
+	int				map_height;
+	int				player_x;
+	int				player_y;
+	char			player_dir;
+	double			player_angle;
+	t_player_move	player_move;
+	char			*file_path;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	t_minimap		minimap;
 }	t_config;
 
 /* --- MAIN --- */
@@ -70,9 +95,11 @@ bool	check_extension(const char *file_name, const char *extension);
 
 /* --- PARSER --- */
 int		handle_texture_and_color(char *trimmed, t_config *config);
-int		process_config_line(char *line, t_config *config, char **first_line_out);
+int		process_config_line(char *line, t_config *config,
+			char **first_line_out);
 int		count_remaining_map_lines(int fd, t_config *config);
-int		count_map_rows_and_capture_first(int fd, t_config *config, char **first_line_out);
+int		count_map_rows_and_capture_first(int fd, t_config *config,
+			char **first_line_out);
 void	parse_file(t_config *config, int fd);
 
 /* --- PARSE TEXTURE --- */
@@ -84,8 +111,10 @@ int		parse_color_line(char *line, t_config *config);
 
 /* --- PARSE MAP --- */
 int		is_valid_map_line(char *line, t_config *config);
-bool	populate_map_from_fd(int fd, int rows, char *first_line, t_config *config);
-bool	fill_map_from_file(const char *path, int rows, char *first_line, t_config *config);
+bool	populate_map_from_fd(int fd, int rows, char *first_line,
+			t_config *config);
+bool	fill_map_from_file(const char *path, int rows, char *first_line,
+			t_config *config);
 
 /* --- CHECK CHARS --- */
 int		check_single_spawn(t_config *config);
@@ -107,12 +136,26 @@ void	render(void *param);
 void	render3d(t_config *config);
 
 /* --- 2D --- */
-void	draw_fill_sq(int x, int y, int size, mlx_image_t *img);
-void	draw_square(int x, int y, int size, mlx_image_t *img);
+void	draw_fill_sq(t_rect rect, uint32_t color, mlx_image_t *img);
+void	draw_square(t_rect rect, uint32_t color, mlx_image_t *img);
 void	draw_map_on_image(t_config *config);
 void	compute_minimap(t_config *config);
 void	compute_map_dims(t_config *config);
-void	render2d(void *param);
+
+/* --- PLAYER --- */
+double	get_initial_angle(char dir);
+void	get_direction_x(double angle, int *dx);
+void	get_direction_y(double angle, int *dy);
+int		is_walkable(t_config *config, double x, double y);
+bool	can_move(double *last_time, double delay_ms);
+void	update_player_movement(t_config *config);
+void	update_player_rotation_keys(t_config *config);
+void	update_player_rotation_mouse(t_config *config, double delta_x);
+void	draw_ray_angle(t_config *config, double angle);
+void	draw_player_ray_cone(t_config *config);
+
+/* --- MOUSE --- */
+void	on_mouse_move(t_config *config);
 
 /* --- FREE --- */
 void	drain_gnl(int fd);

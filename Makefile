@@ -20,18 +20,23 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 # A list of all .c files in the current directory
-SRCS = src/main.c					\
-		src/free.c					\
-		src/parser.c				\
-		src/parse_texture.c			\
-		src/parse_map.c				\
-		src/check_chars.c			\
-		src/mlx/mlx.c				\
-		src/mlx/hooks.c				\
-		src/render/render.c			\
-		src/render/3d/render3d.c	\
-		src/render/2d/draw.c		\
-		src/render/2d/minimap.c		\
+SRCS = src/main.c						\
+		src/free.c						\
+		src/parser.c					\
+		src/parse_texture.c				\
+		src/parse_map.c					\
+		src/check_chars.c				\
+		src/player/player.c				\
+		src/player/player_movement.c	\
+		src/player/player_utils.c		\
+		src/mouse.c						\
+		src/mlx/mlx.c					\
+		src/mlx/hooks.c					\
+		src/render/render.c				\
+		src/render/3d/render3d.c		\
+		src/render/2d/draw.c			\
+		src/render/2d/square.c			\
+		src/render/2d/minimap.c			\
 
 # A list of all .o files that correspond to the .c files
 OBJS = $(SRCS:.c=.o)

@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render3d.c                                         :+:      :+:    :+:   */
+/*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 03:33:05 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 04:54:08 by mcaro-ro         ###   ########.fr       */
+/*   Created: 2025/09/09 05:28:39 by mcaro-ro          #+#    #+#             */
+/*   Updated: 2025/09/09 05:35:11 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../cube.h"
-#include "../../../colors.h"
+#include "../cube.h"
 
-void	render3d(t_config *config)
+void	on_mouse_move(t_config *config)
 {
-	t_rect	rect;
+	static int32_t	last_x;
+	int32_t			delta_x;
+	int32_t			x;
+	int32_t			y;
 
-	rect.x = 0;
-	rect.y = 0;
-	rect.size = 2000;
-	draw_fill_sq(rect, COLOR_PLACE_HOLDER, config->img);
+	last_x = -1;
+	mlx_get_mouse_pos(config->mlx, &x, &y);
+	if (last_x == -1)
+	{
+		last_x = x;
+		return ;
+	}
+	delta_x = x - last_x;
+	update_player_rotation_mouse(config, delta_x);
+	last_x = x;
 }
