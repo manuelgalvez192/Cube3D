@@ -6,14 +6,14 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 05:50:43 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 11:11:51 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:15:36 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cube.h"
 #include <sys/time.h>
 
-static bool can_move(t_config *config)
+static bool	can_move(t_config *config)
 {
 	struct timeval	tv;
 	double			now;
@@ -21,7 +21,7 @@ static bool can_move(t_config *config)
 
 	gettimeofday(&tv, NULL);
 	now = tv.tv_sec * 1000.0 + tv.tv_usec / 1000.0;
-	diff =  now - config->last_time_ms;
+	diff = now - config->last_time_ms;
 	if (diff >= 100.0)
 	{
 		config->last_time_ms = now;
@@ -30,7 +30,7 @@ static bool can_move(t_config *config)
 	return (false);
 }
 
-static void	move_in_direction(t_config *config, double dx, double  dy)
+static void	move_in_direction(t_config *config, double dx, double dy)
 {
 	double	new_x;
 	double	new_y;

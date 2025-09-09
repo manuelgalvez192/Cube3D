@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/09 11:10:10 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:15:08 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,79 +94,79 @@ typedef struct s_config
 }	t_config;
 
 /* --- MAIN --- */
-bool	check_extension(const char *file_name, const char *extension);
+bool		check_extension(const char *file_name, const char *extension);
 
 /* --- PARSER --- */
-int		handle_texture_and_color(char *trimmed, t_config *config);
-int		process_config_line(char *line, t_config *config,
-			char **first_line_out);
-int		count_remaining_map_lines(int fd, t_config *config);
-int		count_map_rows_and_capture_first(int fd, t_config *config,
-			char **first_line_out);
-void	parse_file(t_config *config, int fd);
+int			handle_texture_and_color(char *trimmed, t_config *config);
+int			process_config_line(char *line, t_config *config,
+				char **first_line_out);
+int			count_remaining_map_lines(int fd, t_config *config);
+int			count_map_rows_and_capture_first(int fd, t_config *config,
+				char **first_line_out);
+void		parse_file(t_config *config, int fd);
 
 /* --- PARSE TEXTURE --- */
-int		get_identifier(char *line);
-void	path_maker(t_config *config, char *line, int id);
-int		parse_texture_line(char *line, t_config *config);
-int		parse_rgb(char *str, t_color *color);
-int		parse_color_line(char *line, t_config *config);
+int			get_identifier(char *line);
+void		path_maker(t_config *config, char *line, int id);
+int			parse_texture_line(char *line, t_config *config);
+int			parse_rgb(char *str, t_color *color);
+int			parse_color_line(char *line, t_config *config);
 
 /* --- PARSE MAP --- */
-int		is_valid_map_line(char *line, t_config *config);
-bool	populate_map_from_fd(int fd, int rows, char *first_line,
-			t_config *config);
-bool	fill_map_from_file(const char *path, int rows, char *first_line,
-			t_config *config);
+int			is_valid_map_line(char *line, t_config *config);
+bool		populate_map_from_fd(int fd, int rows, char *first_line,
+				t_config *config);
+bool		fill_map_from_file(const char *path, int rows, char *first_line,
+				t_config *config);
 
 /* --- CHECK CHARS --- */
-int		check_single_spawn(t_config *config);
-int		is_valid_neighbor(char c);
-int		check_neighbors(t_config *config, int i, int j);
-int		check_invalid_spaces(t_config *config);
+int			check_single_spawn(t_config *config);
+int			is_valid_neighbor(char c);
+int			check_neighbors(t_config *config, int i, int j);
+int			check_invalid_spaces(t_config *config);
 
 /* --- MLX --- */
-void	put_pixel_safe(mlx_image_t *img, int x, int y, uint32_t color);
-void	clear_image(mlx_image_t *img);
-void	on_resize(int new_w, int new_h, void *param);
-void	on_key(mlx_key_data_t keydata, void *param);
-void	run_game(t_config *config);
+void		put_pixel_safe(mlx_image_t *img, int x, int y, uint32_t color);
+void		clear_image(mlx_image_t *img);
+void		on_resize(int new_w, int new_h, void *param);
+void		on_key(mlx_key_data_t keydata, void *param);
+void		run_game(t_config *config);
 
 /* --- RENDER --- */
-void	render(void *param);
+void		render(void *param);
 
 /* --- 3D --- */
-void	render3d(t_config *config);
+void		render3d(t_config *config);
 
 /* --- 2D --- */
-void	draw_fill_sq(t_rect rect, uint32_t color, mlx_image_t *img);
-void	draw_square(t_rect rect, uint32_t color, mlx_image_t *img);
-void	draw_map_on_image(t_config *config);
-void	compute_minimap(t_config *config);
-void	compute_map_dims(t_config *config);
+void		draw_fill_sq(t_rect rect, uint32_t color, mlx_image_t *img);
+void		draw_square(t_rect rect, uint32_t color, mlx_image_t *img);
+void		draw_map_on_image(t_config *config);
+void		compute_minimap(t_config *config);
+void		compute_map_dims(t_config *config);
 
 /* --- PLAYER --- */
-double	get_initial_angle(char dir);
-bool	is_walkable(t_config *config, double x, double y);
-bool	is_walkable_radius(t_config *config, double x, double y);
-void	update_delta_time(t_config *config);
-void	update_player_movement(t_config *config);
-void	update_player_rotation_keys(t_config *config);
-void	update_player_rotation_mouse(t_config *config, double delta_x);
-void	draw_ray_angle(t_config *config, double angle);
-void	draw_player_ray_cone(t_config *config);
+double		get_initial_angle(char dir);
+bool		is_walkable(t_config *config, double x, double y);
+bool		is_walkable_radius(t_config *config, double x, double y);
+void		update_delta_time(t_config *config);
+void		update_player_movement(t_config *config);
+void		update_player_rotation_keys(t_config *config);
+void		update_player_rotation_mouse(t_config *config, double delta_x);
+void		draw_ray_angle(t_config *config, double angle);
+void		draw_player_ray_cone(t_config *config);
 
 /* --- MOUSE --- */
-void	on_mouse_move(t_config *config);
+void		on_mouse_move(t_config *config);
 
 /* --- COLOR --- */
 uint32_t	get_color_value(t_color color);
 
 /* --- FREE --- */
-void	drain_gnl(int fd);
-void	free_partial_map(char **map, int count);
-void	free_split(char **split);
-void	error_msg(char *msg, t_config *config);
-void	free_config(t_config **config);
+void		drain_gnl(int fd);
+void		free_partial_map(char **map, int count);
+void		free_split(char **split);
+void		error_msg(char *msg, t_config *config);
+void		free_config(t_config **config);
 
 #endif
