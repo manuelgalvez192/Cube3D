@@ -6,34 +6,13 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 04:47:57 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 10:59:21 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 18:07:42 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cube.h"
 #include "../../colors.h"
 #include <math.h>
-
-void	update_player_rotation_keys(t_config *config)
-{
-	if (config->player_move.rotate_left)
-		config->player_angle -= ROT_SPEED;
-	if (config->player_move.rotate_right)
-		config->player_angle += ROT_SPEED;
-	if (config->player_angle < 0)
-		config->player_angle += 2 * M_PI;
-	if (config->player_angle > 2 * M_PI)
-		config->player_angle -= 2 * M_PI;
-}
-
-void	update_player_rotation_mouse(t_config *config, double delta_x)
-{
-	config->player_angle += delta_x * 0.002;
-	if (config->player_angle < 0)
-		config->player_angle += 2 * M_PI;
-	if (config->player_angle > 2 * M_PI)
-		config->player_angle -= 2 * M_PI;
-}
 
 static int	is_blocked_cell(t_config *config, double x, double y)
 {

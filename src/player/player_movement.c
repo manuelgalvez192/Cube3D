@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 05:50:43 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 11:15:36 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 18:12:33 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,51 @@ static bool	can_move(t_config *config)
 	return (false);
 }
 
-static void	move_in_direction(t_config *config, double dx, double dy)
-{
-	double	new_x;
-	double	new_y;
-
-	new_x = config->player_x + dx;
-	new_y = config->player_y + dy;
-	if (is_walkable_radius(config, new_x, config->player_y))
-		config->player_x = new_x;
-	if (is_walkable_radius(config, config->player_x, new_y))
-		config->player_y = new_y;
-}
-
 void	update_player_movement(t_config *config)
 {
-	if (!can_move(config))
-		return ;
+	float	cos_angle;
+	float	sin_angle;
+
+	cos_angle = cos(config->player_angle);
+	sin_angle = sin(config->player_angle);
 	if (config->player_move.up)
-		move_in_direction(config, 0, -1);
+	{
+		config->player_x += cos_angle * PLAYER_SPEED;
+		config->player_y += sin_angle * PLAYER_SPEED;
+	}
 	if (config->player_move.down)
-		move_in_direction(config, 0, 1);
+	{
+		config->player_x -= cos_angle * PLAYER_SPEED;
+		config->player_y -= sin_angle * PLAYER_SPEED;
+	}
 	if (config->player_move.left)
-		move_in_direction(config, -1, 0);
+	{
+		config->player_x += cos_angle * PLAYER_SPEED;
+		config->player_y -= sin_angle * PLAYER_SPEED;
+	}
 	if (config->player_move.right)
-		move_in_direction(config, 1, 0);
+	{
+		config->player_x -= cos_angle * PLAYER_SPEED;
+		config->player_y += sin_angle * PLAYER_SPEED;
+	}
 }
+
+void	update_player_rotation_keys(t_config *config)
+{
+	if (config->player_move.rotate_left)
+		config->player_angle -= ROT_SPEED;
+	if (config->player_move.rotate_right)
+		config->player_angle += ROT_SPEED;
+	if (config->player_angle > 2 * M_PI)
+		config->player_angle = 0;
+	if (config->player_angle < 0)
+		config->player_angle = 2 * M_PI;
+}
+
+// void	update_player_rotation_mouse(t_config *config, double delta_x)
+// {
+// 	if (config->player_angle < 0)
+// 		config->player_angle += 2 * M_PI;
+// 	if (config->player_angle > 2 * M_PI)
+// 		config->player_angle -= 2 * M_PI;
+// }

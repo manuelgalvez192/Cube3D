@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/09 11:15:08 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 18:03:35 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define RAY_MAX_STEPS	100
 # define ROT_SPEED		0.025
 # define PLAYER_RADIUS	0.00
+# define PLAYER_SPEED	5
 
 typedef struct s_color
 {
