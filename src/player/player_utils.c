@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 06:00:04 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 10:59:07 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 20:34:05 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 double	get_initial_angle(char dir)
 {
 	if (dir == 'N')
-		return (M_PI / 2);
-	if (dir == 'S')
 		return (3 * M_PI / 2);
+	if (dir == 'S')
+		return (M_PI / 2);
 	if (dir == 'E')
 		return (0);
 	if (dir == 'W')
@@ -27,24 +27,42 @@ double	get_initial_angle(char dir)
 	return (0);
 }
 
-bool	is_walkable(t_config *config, double x, double y)
+static bool	is_cell_walkable(t_config *config, int mx, int my)
+{
+	if (my < 0 || my >= config->map_rows || mx < 0 || mx >= config->map_width)
+		return (false);
+	return (config->map[my][mx] == '0');
+}
+bool	is_walkable(t_config *config, float x, float y)
 {
 	int	int_x;
 	int	int_y;
 
-	int_x = (int)x;
-	int_y = (int)y;
-	return ((int_y >= 0)
-		&& (int_y < config->map_rows)
-		&& (int_x >= 0)
-		&& (config->map[int_y][int_x])
-		&& (config->map[int_y][int_x] == '0'));
+	int_x = (int)floor(x);
+	int_y = (int)floor(y);
+	return (is_cell_walkable(config, int_x, int_y));
 }
 
-bool	is_walkable_radius(t_config *config, double x, double y)
+bool	is_walkable_radius(t_config *config, float x, float y)
 {
-	return (is_walkable(config, x - PLAYER_RADIUS, y - PLAYER_RADIUS)
-		&& is_walkable(config, x + PLAYER_RADIUS, y - PLAYER_RADIUS)
-		&& is_walkable(config, x - PLAYER_RADIUS, y + PLAYER_RADIUS)
-		&& is_walkable(config, x + PLAYER_RADIUS, y + PLAYER_RADIUS));
+	int		i;
+	float	ang;
+	float	sx;
+	float	sy;
+
+	if (PLAYER_RADIUS <= 0.0f)
+		return (is_walkable(config,
+			(x + PLAYER_CENTER_OFF),
+			(y + PLAYER_CENTER_OFF)));
+	i = 0;
+	while (i <= 32)
+	{
+		ang = (float)i * (float)M_PI / 4.0f;
+		sx = (x + PLAYER_CENTER_OFF) + cosf(ang) * PLAYER_RADIUS;
+		sy = (y + PLAYER_CENTER_OFF) + sinf(ang) * PLAYER_RADIUS;
+		if (!is_walkable(config, sx, sy))
+			return (false);
+		i++;
+	}
+	return (true);
 }

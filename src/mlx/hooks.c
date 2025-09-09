@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 06:23:33 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 10:29:49 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 20:00:26 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	on_key(mlx_key_data_t keydata, void *param)
 		mlx_close_window(config->mlx);
 	if (keydata.key == MLX_KEY_M && keydata.action == MLX_PRESS)
 		config->minimap.visibility = !config->minimap.visibility;
-	if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
+	if (keydata.action == MLX_PRESS)
 		key_press(keydata, config);
 	if (keydata.action == MLX_RELEASE)
 		key_release(keydata, config);

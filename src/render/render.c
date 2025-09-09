@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 02:05:00 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 10:59:40 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 20:15:01 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	render(void *param)
 	t_config		*config;
 
 	config = param;
-	on_mouse_move(config);
+	// on_mouse_move(config);
 	update_player_rotation_keys(config);
 	update_player_movement(config);
 	clear_image(config->img);

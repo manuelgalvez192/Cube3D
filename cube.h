@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/09 18:03:35 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 20:33:17 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,19 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define WIDTH			1280
-# define HEIGHT			720
-# define TILE_SIZE		10
-# define MINIMAP_RATIO	0.45f
-# define MINIMAP_MARGIN	10
-# define M_PI			3.14159265358979323846f
-# define FOV			1.0471975511965977461542144610932f
-# define RAY_STEP		0.05f
-# define RAY_MAX_STEPS	100
-# define ROT_SPEED		0.025
-# define PLAYER_RADIUS	0.00
-# define PLAYER_SPEED	5
+# define WIDTH				1280
+# define HEIGHT				720
+# define TILE_SIZE			10
+# define MINIMAP_RATIO		0.45f
+# define MINIMAP_MARGIN		10
+# define M_PI				3.14159265358979323846f
+# define FOV				1.0471975511965977461542144610932f
+# define RAY_STEP			0.05f
+# define RAY_MAX_STEPS		100
+# define ROT_SPEED			0.05f
+# define PLAYER_RADIUS		0.2f
+# define PLAYER_SPEED		0.05f
+# define PLAYER_CENTER_OFF	0.5f
 
 typedef struct s_color
 {
@@ -81,8 +82,8 @@ typedef struct s_config
 	int				map_rows;
 	int				map_width;
 	int				map_height;
-	int				player_x;
-	int				player_y;
+	float			player_x;
+	float			player_y;
 	char			player_dir;
 	double			player_angle;
 	t_player_move	player_move;
@@ -148,17 +149,16 @@ void		compute_map_dims(t_config *config);
 
 /* --- PLAYER --- */
 double		get_initial_angle(char dir);
-bool		is_walkable(t_config *config, double x, double y);
-bool		is_walkable_radius(t_config *config, double x, double y);
-void		update_delta_time(t_config *config);
+bool		is_walkable(t_config *config, float x, float y);
+bool		is_walkable_radius(t_config *config, float x, float y);
 void		update_player_movement(t_config *config);
 void		update_player_rotation_keys(t_config *config);
-void		update_player_rotation_mouse(t_config *config, double delta_x);
 void		draw_ray_angle(t_config *config, double angle);
 void		draw_player_ray_cone(t_config *config);
 
 /* --- MOUSE --- */
 void		on_mouse_move(t_config *config);
+void		update_player_rotation_mouse(t_config *config);
 
 /* --- COLOR --- */
 uint32_t	get_color_value(t_color color);

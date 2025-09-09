@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 05:28:39 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 05:35:11 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 19:46:19 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	on_mouse_move(t_config *config)
 {
 	static int32_t	last_x;
-	int32_t			delta_x;
 	int32_t			x;
 	int32_t			y;
 
@@ -26,7 +25,14 @@ void	on_mouse_move(t_config *config)
 		last_x = x;
 		return ;
 	}
-	delta_x = x - last_x;
-	update_player_rotation_mouse(config, delta_x);
+	update_player_rotation_mouse(config);
 	last_x = x;
+}
+
+void	update_player_rotation_mouse(t_config *config)
+{
+	if (config->player_angle < 0)
+		config->player_angle += 2 * M_PI;
+	if (config->player_angle > 2 * M_PI)
+		config->player_angle -= 2 * M_PI;
 }

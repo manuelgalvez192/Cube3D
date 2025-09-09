@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:05:59 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/09 05:44:12 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 19:30:32 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,5 @@ void	parse_file(t_config *config, int fd)
 		return ;
 	if (!check_single_spawn(config))
 		error_msg(MSG_ERR_MAP_NOT_STARTING_POINT, config);
-	config->map[config->player_y][config->player_x] = '0';
+	config->map[(int)config->player_y][(int)config->player_x] = '0';
 }

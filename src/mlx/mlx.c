@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 04:57:55 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 10:06:55 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 18:41:22 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	init_images(t_config *config)
 void	run_game(t_config *config)
 {
 	compute_map_dims(config);
+	ft_memset(&config->player_move, 0, sizeof(config->player_move));
 	mlx_set_setting(MLX_MAXIMIZED, true);
 	config->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
 	mlx_set_cursor_mode(config->mlx, MLX_MOUSE_HIDDEN);
