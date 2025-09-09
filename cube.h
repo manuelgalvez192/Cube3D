@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/09 07:26:38 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:10:10 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@
 # define MINIMAP_RATIO	0.45f
 # define MINIMAP_MARGIN	10
 # define M_PI			3.14159265358979323846f
-# define MOVE_SPEED		0.05f
 # define FOV			1.0471975511965977461542144610932f
 # define RAY_STEP		0.05f
-# define RAYS_NUM		100
+# define RAY_MAX_STEPS	100
+# define ROT_SPEED		0.025
+# define PLAYER_RADIUS	0.00
 
 typedef struct s_color
 {
@@ -88,6 +89,8 @@ typedef struct s_config
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	t_minimap		minimap;
+	double			last_time_ms;
+	double			delta_time;
 }	t_config;
 
 /* --- MAIN --- */
@@ -144,10 +147,9 @@ void	compute_map_dims(t_config *config);
 
 /* --- PLAYER --- */
 double	get_initial_angle(char dir);
-void	get_direction_x(double angle, int *dx);
-void	get_direction_y(double angle, int *dy);
-int		is_walkable(t_config *config, double x, double y);
-bool	can_move(double *last_time, double delay_ms);
+bool	is_walkable(t_config *config, double x, double y);
+bool	is_walkable_radius(t_config *config, double x, double y);
+void	update_delta_time(t_config *config);
 void	update_player_movement(t_config *config);
 void	update_player_rotation_keys(t_config *config);
 void	update_player_rotation_mouse(t_config *config, double delta_x);
@@ -156,6 +158,9 @@ void	draw_player_ray_cone(t_config *config);
 
 /* --- MOUSE --- */
 void	on_mouse_move(t_config *config);
+
+/* --- COLOR --- */
+uint32_t	get_color_value(t_color color);
 
 /* --- FREE --- */
 void	drain_gnl(int fd);

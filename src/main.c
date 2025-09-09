@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:33:27 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/09 06:32:17 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 10:07:48 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ void	show_map(t_config *config)
 	int	i;
 
 	i = 0;
-	printf("Mapa (%d filas, %d columnas, player_x = %d, player_y = %d, player_dir = %d):\n",
-		config->map_rows, config->map_width,
-		config->player_x, config->player_y, config->player_dir);
+	printf("Mapa (%d filas, %f angle,:\n",
+		config->map_rows, config->player_angle);
 	while (i < config->map_rows)
 	{
 		printf("%s", config->map[i]);

@@ -6,97 +6,53 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 05:50:43 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 07:18:12 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:11:51 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cube.h"
-#include <math.h>
+#include <sys/time.h>
 
-static void	move_forward(t_config *config)
+static bool can_move(t_config *config)
 {
-	int	double_x;
-	int	double_y;
-	int	new_x;
-	int	new_y;	
+	struct timeval	tv;
+	double			now;
+	double			diff;
 
-	get_direction_x(config->player_angle, &double_x);
-	get_direction_y(config->player_angle, &double_y);
-	new_x = config->player_x + double_x;
-	new_y = config->player_y + double_y;
-	if (is_walkable(config, new_x, new_y))
+	gettimeofday(&tv, NULL);
+	now = tv.tv_sec * 1000.0 + tv.tv_usec / 1000.0;
+	diff =  now - config->last_time_ms;
+	if (diff >= 100.0)
 	{
-		config->player_x = new_x;
-		config->player_y = new_y;
+		config->last_time_ms = now;
+		return (true);
 	}
+	return (false);
 }
 
-static void	move_backward(t_config *config)
+static void	move_in_direction(t_config *config, double dx, double  dy)
 {
-	int	double_x;
-	int	double_y;
-	int	new_x;
-	int	new_y;	
+	double	new_x;
+	double	new_y;
 
-	get_direction_x(config->player_angle, &double_x);
-	get_direction_y(config->player_angle, &double_y);
-	new_x = config->player_x - double_x;
-	new_y = config->player_y - double_y;
-	if (is_walkable(config, new_x, new_y))
-	{
+	new_x = config->player_x + dx;
+	new_y = config->player_y + dy;
+	if (is_walkable_radius(config, new_x, config->player_y))
 		config->player_x = new_x;
+	if (is_walkable_radius(config, config->player_x, new_y))
 		config->player_y = new_y;
-	}
-}
-
-static void	strafe_left(t_config *config)
-{
-	int	double_x;
-	int	double_y;
-	int	new_x;
-	int	new_y;	
-
-	get_direction_x(config->player_angle - M_PI / 2, &double_x);
-	get_direction_y(config->player_angle - M_PI / 2, &double_y);
-	new_x = config->player_x + double_x;
-	new_y = config->player_y + double_y;
-	if (is_walkable(config, new_x, new_y))
-	{
-		config->player_x = new_x;
-		config->player_y = new_y;
-	}
-}
-
-static void	strafe_right(t_config *config)
-{
-	int	double_x;
-	int	double_y;
-	int	new_x;
-	int	new_y;	
-
-	get_direction_x(config->player_angle + M_PI / 2, &double_x);
-	get_direction_y(config->player_angle + M_PI / 2, &double_y);
-	new_x = config->player_x + double_x;
-	new_y = config->player_y + double_y;
-	if (is_walkable(config, new_x, new_y))
-	{
-		config->player_x = new_x;
-		config->player_y = new_y;
-	}
 }
 
 void	update_player_movement(t_config *config)
 {
-	static double	last_move = 0;
-
-	if (!can_move(&last_move, 60))
+	if (!can_move(config))
 		return ;
 	if (config->player_move.up)
-		move_forward(config);
+		move_in_direction(config, 0, -1);
 	if (config->player_move.down)
-		move_backward(config);
+		move_in_direction(config, 0, 1);
 	if (config->player_move.left)
-		strafe_left(config);
+		move_in_direction(config, -1, 0);
 	if (config->player_move.right)
-		strafe_right(config);
+		move_in_direction(config, 1, 0);
 }

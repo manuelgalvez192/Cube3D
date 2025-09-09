@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 04:47:57 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 07:17:19 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 10:59:21 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 void	update_player_rotation_keys(t_config *config)
 {
 	if (config->player_move.rotate_left)
-		config->player_angle -= 0.05;
+		config->player_angle -= ROT_SPEED;
 	if (config->player_move.rotate_right)
-		config->player_angle += 0.05;
+		config->player_angle += ROT_SPEED;
 	if (config->player_angle < 0)
 		config->player_angle += 2 * M_PI;
 	if (config->player_angle > 2 * M_PI)
@@ -51,10 +51,12 @@ void	draw_ray_angle(t_config *config, double angle)
 {
 	double	rx;
 	double	ry;
+	int		i;
 
+	i = 0;
 	rx = config->player_x + 0.5;
 	ry = config->player_y + 0.5;
-	while (true)
+	while ((uint32_t)i < config->img->width)
 	{
 		if (is_blocked_cell(config, rx, ry))
 			break ;
@@ -77,9 +79,9 @@ void	draw_player_ray_cone(t_config *config)
 	i = 0;
 	start_a = config->player_angle - (FOV / 2);
 	end_a = config->player_angle + (FOV / 2);
-	while (i < RAYS_NUM)
+	while ((uint32_t)i < config->img->width)
 	{
-		angle = start_a + ((double)i / RAYS_NUM) * (end_a - start_a);
+		angle = start_a + ((double)i / config->img->width) * (end_a - start_a);
 		draw_ray_angle(config, angle);
 		i++;
 	}

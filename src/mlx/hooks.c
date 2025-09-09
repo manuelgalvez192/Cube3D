@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 06:23:33 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 07:24:22 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/09 10:29:49 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,49 @@ void	on_resize(int new_w, int new_h, void *param)
 		config->minimap.x_off, config->minimap.y_off);
 }
 
+static void	key_press(mlx_key_data_t keydata, t_config *config)
+{
+	if (keydata.key == MLX_KEY_W)
+		config->player_move.up = true;
+	if (keydata.key == MLX_KEY_S)
+		config->player_move.down = true;
+	if (keydata.key == MLX_KEY_A)
+		config->player_move.left = true;
+	if (keydata.key == MLX_KEY_D)
+		config->player_move.right = true;
+	if (keydata.key == MLX_KEY_LEFT)
+		config->player_move.rotate_left = true;
+	if (keydata.key == MLX_KEY_RIGHT)
+		config->player_move.rotate_right = true;
+}
+
+static void	key_release(mlx_key_data_t keydata, t_config *config)
+{
+	if (keydata.key == MLX_KEY_W)
+		config->player_move.up = false;
+	if (keydata.key == MLX_KEY_S)
+		config->player_move.down = false;
+	if (keydata.key == MLX_KEY_A)
+		config->player_move.left = false;
+	if (keydata.key == MLX_KEY_D)
+		config->player_move.right = false;
+	if (keydata.key == MLX_KEY_LEFT)
+		config->player_move.rotate_left = false;
+	if (keydata.key == MLX_KEY_RIGHT)
+		config->player_move.rotate_right = false;
+}
+
 void	on_key(mlx_key_data_t keydata, void *param)
 {
 	t_config	*config;
-	bool		pressed;
 
 	config = param;
-	pressed = keydata.action != MLX_RELEASE;
 	if (keydata.key == MLX_KEY_ESCAPE)
 		mlx_close_window(config->mlx);
 	if (keydata.key == MLX_KEY_M && keydata.action == MLX_PRESS)
 		config->minimap.visibility = !config->minimap.visibility;
-	if (keydata.key == MLX_KEY_W)
-		config->player_move.up = pressed;
-	if (keydata.key == MLX_KEY_S)
-		config->player_move.down = pressed;
-	if (keydata.key == MLX_KEY_A)
-		config->player_move.left = pressed;
-	if (keydata.key == MLX_KEY_D)
-		config->player_move.right = pressed;
-	if (keydata.key == MLX_KEY_LEFT)
-		config->player_move.rotate_left = pressed;
-	if (keydata.key == MLX_KEY_RIGHT)
-		config->player_move.rotate_right = pressed;
+	if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
+		key_press(keydata, config);
+	if (keydata.action == MLX_RELEASE)
+		key_release(keydata, config);
 }

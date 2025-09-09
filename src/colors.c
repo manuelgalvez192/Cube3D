@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
+/*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 02:05:00 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 10:59:40 by mcaro-ro         ###   ########.fr       */
+/*   Created: 2025/09/09 08:42:57 by mcaro-ro          #+#    #+#             */
+/*   Updated: 2025/09/09 08:44:46 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cube.h"
+#include "../cube.h"
 
-void	render(void *param)
+uint32_t	get_color_value(t_color color)
 {
-	t_config		*config;
+	uint32_t	result;
+	uint8_t		r;
+	uint8_t		g;
+	uint8_t		b;
 
-	config = param;
-	on_mouse_move(config);
-	update_player_rotation_keys(config);
-	update_player_movement(config);
-	clear_image(config->img);
-	render3d(config);
-	if (config->minimap.visibility == true)
-	{
-		compute_minimap(config);
-		clear_image(config->minimap.img);
-		draw_map_on_image(config);
-	}
-	else
-		clear_image(config->minimap.img);
+	r = (uint8_t)color.r;
+	g = (uint8_t)color.g;
+	b = (uint8_t)color.b;
+	result = (r << 24) | (g << 16) | (b << 8) | 0xFF;
+	return (result);
 }

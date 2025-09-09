@@ -26,6 +26,7 @@ SRCS = src/main.c						\
 		src/parse_texture.c				\
 		src/parse_map.c					\
 		src/check_chars.c				\
+		src/colors.c					\
 		src/player/player.c				\
 		src/player/player_movement.c	\
 		src/player/player_utils.c		\
