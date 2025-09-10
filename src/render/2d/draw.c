@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 01:21:53 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 22:54:41 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 17:47:11 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,25 @@ void	draw_map_on_image(t_config *config)
 	draw_minimap_border(COLOR_MINIMAP_BORDER, &config->minimap);
 	draw_player_on_minimap(config);
 	draw_player_ray_cone(config);
+}
+
+void	draw_ray_minimap(t_config *config, float cos_angle, float sin_angle)
+{
+	float	ray_x;
+	float	ray_y;
+	int		pix_x;
+	int		pix_y;
+
+	ray_x = config->player_x + PLAYER_CENTER_OFF;
+	ray_y = config->player_y + PLAYER_CENTER_OFF;
+	while (!is_wall_cell(config, ray_x, ray_y)
+		&& !(is_wall_cell(config, ray_x + 1, ray_y)
+			&& is_wall_cell(config, ray_x, ray_y + 1)))
+	{
+		pix_x = (int)(ray_x * config->minimap.tile);
+		pix_y = (int)(ray_y * config->minimap.tile);
+		put_pixel_safe(config->minimap.img, pix_x, pix_y, COLOR_RAY);
+		ray_x += cos_angle;
+		ray_y += sin_angle;
+	}
 }

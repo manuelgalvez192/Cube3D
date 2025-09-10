@@ -6,67 +6,62 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 03:33:05 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 23:18:58 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 18:05:54 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../cube.h"
-#include "../../../colors.h"
 #include <math.h>
 
-static double	cast_ray(t_config *config, float angle, bool *hit_vertical)
+static void	draw_textured_column(t_config *config, t_col_data *col)
 {
-	float	rx;
-	float	ry;
-	float	lx;
-	float	ly;
-	int		steps;
+	int	y;
+	int	start;
+	int	end;
 
-	steps = 0;
-	rx = config->player_x + PLAYER_CENTER_OFF;
-	ry = config->player_y + PLAYER_CENTER_OFF;
-	lx = rx;
-	ly = ry;
-	while (steps < RAY_MAX_STEPS && is_walkable(config, rx, ry))
+	start = (int)(config->img->height / 2) - (col->height / 2);
+	end = start + col->height;
+	y = 0;
+	while ((uint32_t)y < config->img->height)
 	{
-		lx = rx;
-		ly = ry;
-		rx += cosf(angle) * RAY_STEP;
-		ry += sinf(angle) * RAY_STEP;
-		steps++;
+		if (y >= start && y < end)
+		{
+			put_pixel_safe(config->img, col->x, y,
+				get_texture_pixel(col->tex, col->tex_x,
+					((y - start) * col->tex->height) / col->height));
+		}
+		if (y < start)
+			put_pixel_safe(config->img, col->x, y,
+				get_color_value(config->ceiling));
+		else if (y >= end)
+			put_pixel_safe(config->img, col->x, y,
+				get_color_value(config->floor));
+		y++;
 	}
-	*hit_vertical = (fabsf(rx - lx) > fabsf(ry - ly));
-	return (sqrtf((rx - (config->player_x + PLAYER_CENTER_OFF))
-		* (rx - (config->player_x + PLAYER_CENTER_OFF))
-		+ (ry - (config->player_y + PLAYER_CENTER_OFF))
-		* (ry - (config->player_y + PLAYER_CENTER_OFF))));
 }
 
-int	get_column_height(float dist, uint32_t screen_height)
+static int	get_column_height(double prep, uint32_t screen_height)
 {
-	if (dist < 0.1f)
-		dist = 0.1f;
-	if (dist > 10.0f)
-		dist = 10.0f;
-	return ((int)(screen_height / dist));
+	if (prep < OFFSET_EPSILON)
+		prep = OFFSET_EPSILON;
+	return ((int)(screen_height / prep));
 }
 
-static void render_column(t_config *c, int x)
+void	render_column(t_config *config, int x)
 {
-    float   angle;
-    float   raw;
-    float   dist;
-    int     tex_x;
-    bool    hit_vert;
+	double		angle;
+	t_rayhit	hit;
+	t_col_data	col;
 
-    angle = c->player_angle - (FOV / 2.0f)
-        + ((float)x / c->img->width) * FOV;
-    raw = cast_ray(c, angle, &hit_vert);
-    dist = raw * cosf(angle - c->player_angle);
-    tex_x = get_wall_tex_x(c, raw, angle, hit_vert);
-    draw_textured_column(c, x, get_column_height(dist, c->img->height), tex_x);
+	angle = config->player_angle - (FOV / 2.0)
+		+ ((double)x / (double)config->img->width) * FOV;
+	hit = dda_cast(config, cos(angle), sin(angle));
+	col.height = get_column_height(hit.perp_dist, config->img->height);
+	col.x = x;
+	col.tex = get_wall_texture(config, side_from_hit(&hit));
+	col.tex_x = tex_x_from_hit(&hit, col.tex);
+	draw_textured_column(config, &col);
 }
-
 
 void	render3d(t_config *config)
 {
