@@ -6,11 +6,11 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 06:00:04 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 22:18:56 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:17:22 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cube.h"
+#include "cube.h"
 #include <math.h>
 #include <sys/time.h>
 

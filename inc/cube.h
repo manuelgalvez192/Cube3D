@@ -6,24 +6,24 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/10 18:04:52 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:21:15 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE_H
 # define CUBE_H
 
-# include "./libft/libft.h"
-# include "./MLX42/include/MLX42/MLX42.h"
+# include "../libft/libft.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
 
 /* --- PLAYER --- */
-# define PLAYER_ROT_SPEED	0.05f
+# define PLAYER_ROT_SPEED	2.0f
 # define PLAYER_RADIUS		0.2f
-# define PLAYER_SPEED		0.05f
+# define PLAYER_SPEED		2.0f
 # define PLAYER_CENTER_OFF	0.5f
 
 /* --- WINDOW --- */
@@ -222,9 +222,11 @@ void			compute_map_dims(t_config *config);
 double			get_initial_angle(char dir);
 bool			is_walkable(t_config *config, float x, float y);
 bool			is_walkable_radius(t_config *config, float x, float y);
-void			update_player_movement(t_config *config);
-void			update_player_rotation_keys(t_config *config);
+void			update_player_movement(t_config *config, double delta_time);
+void			update_player_rotation_keys(t_config *config,
+					double delta_time);
 void			draw_player_ray_cone(t_config *config);
+double			get_delta_time(void);
 
 /* --- MOUSE --- */
 void			on_mouse_move(t_config *config);

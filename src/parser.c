@@ -6,13 +6,12 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:05:59 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/10 17:49:41 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:19:23 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube.h"
-#include "../strings.h"
-#include <math.h>
+#include "cube.h"
+#include "strings.h"
 
 int	handle_texture_and_color(char *trimmed, t_config *config)
 {

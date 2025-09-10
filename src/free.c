@@ -6,11 +6,11 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:18:17 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/08 07:11:15 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:18:21 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube.h"
+#include "cube.h"
 
 void	drain_gnl(int fd)
 {

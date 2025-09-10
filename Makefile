@@ -1,22 +1,20 @@
 MAKEFLAGS += --no-print-directory
-# The name of your project
+# PROYECT
 NAME = cub3D
 MAP = ./maps/map.cub
+
+# PATHS
 LIBFT = ./libft/
 LIBFT_LIB = $(LIBFT)libft.a
 LIBMLX	:= ./MLX42
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 
-# The C compiler to use
+# COMPILER
 CC = cc -g3
-
-# The flags to use with the archiver
 ARFLAGS = -rc
+CFLAGS = -Wall -Wextra -Werror -Iinc
 
-# The flags to use with the C compiler
-CFLAGS = -Wall -Wextra -Werror
-
-# The command to remove files
+# Remove command
 RM = rm -f
 
 # A list of all .c files in the current directory
@@ -42,7 +40,6 @@ SRCS = src/main.c						\
 		src/render/2d/square.c			\
 		src/render/2d/minimap.c			\
 
-# A list of all .o files that correspond to the .c files
 OBJS = $(SRCS:.c=.o)
 
 # A list of all .o files of bonus
@@ -81,6 +78,9 @@ re: fclean all
 # A rule to run the program
 run: all
 	./$(NAME) $(MAP)
+
+norm:
+	norminette src inc
 
 # A special rule to tell make that these targets aren't files
 .PHONY: all fclean re clean run error

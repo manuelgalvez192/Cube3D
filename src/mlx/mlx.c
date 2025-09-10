@@ -6,12 +6,12 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 04:57:55 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 23:49:09 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:17:33 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cube.h"
-#include "../../paths.h"
+#include "cube.h"
+#include "paths.h"
 
 void	put_pixel_safe(mlx_image_t *img, int x, int y, uint32_t color)
 {

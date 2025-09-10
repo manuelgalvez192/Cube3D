@@ -6,11 +6,11 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 17:38:04 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/09 04:47:54 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:18:15 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube.h"
+#include "cube.h"
 
 int	check_single_spawn(t_config *config)
 {

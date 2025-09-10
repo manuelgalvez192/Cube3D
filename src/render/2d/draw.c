@@ -6,12 +6,12 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 01:21:53 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/10 17:47:11 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:17:41 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../cube.h"
-#include "../../../colors.h"
+#include "cube.h"
+#include "colors.h"
 
 static void	draw_cell(t_config *config, int i, int j)
 {

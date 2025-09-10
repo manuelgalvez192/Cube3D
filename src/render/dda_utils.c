@@ -6,12 +6,12 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:52:10 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/10 17:47:36 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:18:06 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cube.h"
-#include "../../colors.h"
+#include "cube.h"
+#include "colors.h"
 
 int	is_wall_cell(t_config *config, int mx, int my)
 {

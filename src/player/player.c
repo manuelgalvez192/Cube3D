@@ -6,12 +6,12 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 04:47:57 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/10 17:17:41 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:17:27 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cube.h"
-#include "../../colors.h"
+#include "cube.h"
+#include "colors.h"
 #include <math.h>
 
 void	draw_player_ray_cone(t_config *config)

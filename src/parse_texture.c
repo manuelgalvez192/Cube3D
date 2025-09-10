@@ -6,12 +6,12 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:52:58 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/08 07:10:07 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:18:43 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube.h"
-#include "../strings.h"
+#include "cube.h"
+#include "strings.h"
 
 int	get_identifier(char *line)
 {

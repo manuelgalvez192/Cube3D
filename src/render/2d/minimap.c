@@ -6,11 +6,11 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 01:23:14 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 04:54:08 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:17:45 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../cube.h"
+#include "cube.h"
 
 static void	compute_minimap_max(t_config *config)
 {

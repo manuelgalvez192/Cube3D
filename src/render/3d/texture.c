@@ -6,11 +6,11 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 20:50:48 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/10 16:32:23 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:17:59 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../cube.h"
+#include "cube.h"
 
 t_wall_side	side_from_hit(const t_rayhit *hit)
 {

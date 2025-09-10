@@ -6,11 +6,11 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 05:28:39 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 19:46:19 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:18:29 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube.h"
+#include "cube.h"
 
 void	on_mouse_move(t_config *config)
 {

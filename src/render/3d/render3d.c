@@ -6,11 +6,11 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 03:33:05 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/10 18:05:54 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:17:55 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../cube.h"
+#include "cube.h"
 #include <math.h>
 
 static void	draw_textured_column(t_config *config, t_col_data *col)

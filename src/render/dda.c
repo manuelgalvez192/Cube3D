@@ -6,11 +6,11 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 03:45:16 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/10 17:25:45 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:18:10 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cube.h"
+#include "cube.h"
 
 static double	dda_init_delta(double dir)
 {

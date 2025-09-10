@@ -6,11 +6,11 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:33:27 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/09 10:07:48 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:08:20 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube.h"
+#include "cube.h"
 
 // Muestra el mapa en consola (para debug)
 void	show_map(t_config *config)
