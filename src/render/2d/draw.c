@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 01:21:53 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/10 20:17:41 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 20:49:32 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	draw_map_on_image(t_config *config)
 	while (i < config->map_rows)
 	{
 		j = 0;
-		while (j < config->map_width)
+		while (config->map[i][j] && j < config->map_width)
 		{
 			if (config->map[i][j] == '1')
 				draw_cell(config, i, j);

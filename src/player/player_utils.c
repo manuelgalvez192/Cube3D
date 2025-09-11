@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 06:00:04 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/10 20:17:22 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 21:11:21 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,14 @@ double	get_initial_angle(char dir)
 
 static bool	is_cell_walkable(t_config *config, int mx, int my)
 {
-	if (my < 0 || my >= config->map_rows || mx < 0 || mx >= config->map_width)
+	size_t	row_len;
+
+	if (my < 0 || my >= config->map_rows)
+		return (false);
+	if (!config->map[my])
+		return (false);
+	row_len = ft_strlen(config->map[my]);
+	if (mx < 0 || (size_t)mx >= row_len)
 		return (false);
 	return (config->map[my][mx] == '0');
 }

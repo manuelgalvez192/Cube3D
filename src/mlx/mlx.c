@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 04:57:55 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/10 20:17:33 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/10 23:53:38 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	init_images(t_config *config)
 void	run_game(t_config *config)
 {
 	compute_map_dims(config);
-	if (!mlx_load_png(PATH_WALL_TEXTURE))
+	if (!mlx_load_png(PATH_WALL_TEXTURE) || !mlx_load_png(PATH_EXIT_TEXTURE))
 		return ;
 	config->texture_wall.nort = mlx_load_png(PATH_WALL_TEXTURE);
-	config->texture_wall.south = mlx_load_png(PATH_WALL_TEXTURE);
+	config->texture_wall.south = mlx_load_png(PATH_EXIT_TEXTURE);
 	config->texture_wall.east = mlx_load_png(PATH_WALL_TEXTURE);
 	config->texture_wall.west = mlx_load_png(PATH_WALL_TEXTURE);
 	ft_memset(&config->player_move, 0, sizeof(config->player_move));

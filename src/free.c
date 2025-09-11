@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:18:17 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/10 20:18:21 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/11 18:11:31 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,24 @@ void	error_msg(char *msg, t_config *config)
 	printf("%s", msg);
 	free_config(&config);
 	exit(1);
+}
+
+void    free_mlx_textures(t_config *config)
+{
+    if (config->texture_wall.east)
+        mlx_delete_texture(config->texture_wall.east);
+    if (config->texture_wall.nort)
+        mlx_delete_texture(config->texture_wall.nort);
+    if (config->texture_wall.west)
+        mlx_delete_texture(config->texture_wall.west);
+     if (config->texture_wall.south)
+        mlx_delete_texture(config->texture_wall.south);
+    if (config->minimap.img)
+        mlx_delete_image(config->mlx, config->minimap.img);
+    if (config->img)
+        mlx_delete_image(config->mlx, config->img);
+    if (config->mlx)
+        mlx_terminate(config->mlx);
 }
 
 void	free_config(t_config **config)
