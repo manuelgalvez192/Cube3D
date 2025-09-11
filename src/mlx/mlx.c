@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 04:57:55 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/10 23:53:38 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/12 00:22:51 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ void	init_images(t_config *config)
 			config->minimap.height);
 	mlx_image_to_window(config->mlx, config->minimap.img,
 		config->minimap.x_off, config->minimap.y_off);
+	mlx_delete_texture(config->texture_wall.nort);
+	mlx_delete_texture(config->texture_wall.west);
+	mlx_delete_texture(config->texture_wall.south);
+	mlx_delete_texture(config->texture_wall.east);
 }
 
 void	run_game(t_config *config)
