@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/10 20:21:15 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/13 17:44:04 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ typedef struct s_config
 }	t_config;
 
 /* --- MAIN --- */
-bool			check_extension(const char *file_name, const char *extension);
+bool			check_extension(const char *arg, const char *extension);
 
 /* --- PARSER --- */
 int				handle_texture_and_color(char *trimmed, t_config *config);

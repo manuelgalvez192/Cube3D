@@ -79,6 +79,27 @@ re: fclean all
 run: all
 	./$(NAME) $(MAP)
 
+error: all
+	@echo
+	-./$(NAME)
+	@echo
+	-./$(NAME) maps/invalid/.cub
+	@echo
+	-./$(NAME) maps/invalid/no_extension
+	@echo
+	-./$(NAME) maps/invalid/other_extension.txt
+	@echo
+	-./$(NAME) maps/invalid/empty.cub
+	@echo
+	-./$(NAME) maps/invalid/not_surrounded.cub
+	@echo
+	-./$(NAME) maps/invalid/no_starting_position.cub
+	@echo
+	-./$(NAME) maps/invalid/two_starting_positions.cub
+	@echo
+	-./$(NAME) maps/invalid/other_characters.cub
+	@echo
+
 norm:
 	norminette src inc
 

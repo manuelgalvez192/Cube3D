@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:33:27 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/10 20:08:20 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/13 17:45:09 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,31 @@ void	show_map(t_config *config)
 	}
 }
 
-bool	check_extension(const char *file_name, const char *extension)
-{
-	size_t	file_len;
-	size_t	ext_len;
+#include "cube.h"
 
-	file_len = ft_strlen(file_name);
-	ext_len = ft_strlen(extension);
-	if (file_len < ext_len)
-		return (false);
-	return (ft_strncmp(file_name + file_len - ext_len, extension, ext_len));
+bool check_extension(const char *arg, const char *extension)
+{
+	const char *base = arg;
+	const char *p = arg;
+	size_t base_len;
+	size_t ext_len = ft_strlen(extension);
+
+	if (!arg || !*arg)
+		return (true);
+	while (*p)
+	{
+		if (*p == '/')
+			base = p + 1;
+		p++;
+	}
+	base_len = ft_strlen(base);
+	if (base[0] == '.')
+    	return (true);
+	if (base_len <= ext_len)
+		return (true);
+	if (ft_strncmp(base + base_len - ext_len, extension, ext_len) != 0)
+		return (true);
+	return (false);
 }
 
 int	main(int argc, char **argv)
