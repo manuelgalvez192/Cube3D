@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:52:58 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/10 20:18:43 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/13 23:05:44 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	path_maker(t_config *config, char *line, int id)
 		config->we_texture = path;
 	else if (id == 4)
 		config->ea_texture = path;
-	free(path);
+	// free(path);
 }
 
 int	parse_texture_line(char *line, t_config *config)

@@ -12,7 +12,7 @@ LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 # COMPILER
 CC = cc -g3
 ARFLAGS = -rc
-CFLAGS = -Wall -Wextra -Werror -g3 -Iinc #-fsanitize=address -fno-omit-frame-pointer
+CFLAGS = -Wall -Wextra -Werror -g3 -Iinc -fsanitize=address -fno-omit-frame-pointer
 
 # Remove command
 RM = rm -f

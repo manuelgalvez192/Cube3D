@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:18:17 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/11 23:42:43 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/13 23:12:56 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	error_msg(char *msg, t_config *config)
 	exit(1);
 }
 
-void    free_mlx_textures(t_config *config)
+void    free_mlx(t_config *config)
 {
     if (config->texture_wall.east)
         mlx_delete_texture(config->texture_wall.east);
@@ -70,14 +70,22 @@ void    free_mlx_textures(t_config *config)
         mlx_delete_image(config->mlx, config->minimap.img);
     if (config->img)
         mlx_delete_image(config->mlx, config->img);
-    if (config->mlx)
-        mlx_terminate(config->mlx);
+    mlx_terminate(config->mlx);
+	free_config(&config);
 }
 
 void	free_config(t_config **config)
 {
 	if (config && *config)
 	{
+		if ((*config)->no_texture)
+			free((*config)->no_texture);
+		if ((*config)->so_texture)
+			free((*config)->so_texture);
+		if ((*config)->we_texture)
+			free((*config)->we_texture);
+		if ((*config)->ea_texture)
+			free((*config)->ea_texture);
 		free_split((*config)->map);
 		free((*config)->file_path);
 		free(*config);

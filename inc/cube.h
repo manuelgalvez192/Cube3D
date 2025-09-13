@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/13 17:44:04 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/13 23:02:54 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,5 +241,6 @@ void			free_partial_map(char **map, int count);
 void			free_split(char **split);
 void			error_msg(char *msg, t_config *config);
 void			free_config(t_config **config);
+void    		free_mlx(t_config *config);
 
 #endif

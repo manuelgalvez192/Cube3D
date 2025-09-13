@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 04:57:55 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/13 17:51:41 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/13 22:59:22 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,14 @@ void	init_images(t_config *config)
 void	run_game(t_config *config)
 {
 	compute_map_dims(config);
-	if (!mlx_load_png(PATH_WALL_TEXTURE) || !mlx_load_png(PATH_EXIT_TEXTURE))
-		return ;
-	config->texture_wall.nort = mlx_load_png(PATH_WALL_TEXTURE);
-	config->texture_wall.south = mlx_load_png(PATH_EXIT_TEXTURE);
-	config->texture_wall.east = mlx_load_png(PATH_WALL_TEXTURE);
-	config->texture_wall.west = mlx_load_png(PATH_WALL_TEXTURE);
+	printf("Esta es la ruta del no: %s\n", config->no_texture);
+	if (!mlx_load_png(config->no_texture) || !mlx_load_png(config->so_texture)
+		|| !mlx_load_png(config->ea_texture) || !mlx_load_png(config->we_texture))
+		free_mlx(config);
+	config->texture_wall.nort = mlx_load_png(config->no_texture);
+	config->texture_wall.south = mlx_load_png(config->so_texture);
+	config->texture_wall.east = mlx_load_png(config->ea_texture);
+	config->texture_wall.west = mlx_load_png(config->we_texture);
 	ft_memset(&config->player_move, 0, sizeof(config->player_move));
 	mlx_set_setting(MLX_MAXIMIZED, true);
 	config->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
