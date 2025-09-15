@@ -6,7 +6,7 @@
 /*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:18:17 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/15 17:20:17 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:21:28 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,26 +63,26 @@ void	free_mlx(t_config *config)
 		mlx_delete_image(config->mlx, config->minimap.img);
 	if (config->img)
 		mlx_delete_image(config->mlx, config->img);
-	mlx_terminate(config->mlx);
 	free_config(&config);
+	mlx_terminate(config->mlx);
 }
-
-void	free_config(t_config **config)
-{
-	if (config && *config)
+	
+	void	free_config(t_config **config)
 	{
-		if ((*config)->no_texture)
+		if (config && *config)
+		{
+			if ((*config)->no_texture)
 			free((*config)->no_texture);
-		if ((*config)->so_texture)
+			if ((*config)->so_texture)
 			free((*config)->so_texture);
-		if ((*config)->we_texture)
+			if ((*config)->we_texture)
 			free((*config)->we_texture);
-		if ((*config)->ea_texture)
+			if ((*config)->ea_texture)
 			free((*config)->ea_texture);
-		free_split((*config)->map);
-		free((*config)->file_path);
-		free(*config);
-		*config = NULL;
-	}
+			free_split((*config)->map);
+			free((*config)->file_path);
+			free(*config);
+			*config = NULL;
+		}
 	exit(0);
 }

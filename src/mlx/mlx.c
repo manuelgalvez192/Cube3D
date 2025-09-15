@@ -6,7 +6,7 @@
 /*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 04:57:55 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/15 15:28:41 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:19:27 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	init_images(t_config *config)
 void	run_game(t_config *config)
 {
 	compute_map_dims(config);
-	printf("Esta es la ruta del no: %s\n", config->no_texture);
 	if (!mlx_load_png(config->no_texture) || !mlx_load_png(config->so_texture)
 		|| !mlx_load_png(config->ea_texture)
 		|| !mlx_load_png(config->we_texture))
