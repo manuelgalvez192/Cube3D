@@ -1,6 +1,11 @@
 C 000,000,250
 F 00,200,00
 
+NO ./textures/wall_1.png
+SO ./textures/wall_2.png
+WE ./textures/wall_3.png
+EA ./textures/wood.png
+
 11111111111111111111
 10000000000000000001
 10000000000100000001

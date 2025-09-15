@@ -3,27 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:18:17 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/13 23:12:56 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:20:17 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-void	drain_gnl(int fd)
-{
-	char	*tmp;
-
-	while ((tmp = get_next_line(fd)))
-		free(tmp);
-}
-
 void	free_partial_map(char **map, int count)
 {
 	int	i;
 
+	i = 0;
 	if (!map)
 		return ;
 	while (i < count)
@@ -56,21 +49,21 @@ void	error_msg(char *msg, t_config *config)
 	exit(1);
 }
 
-void    free_mlx(t_config *config)
+void	free_mlx(t_config *config)
 {
-    if (config->texture_wall.east)
-        mlx_delete_texture(config->texture_wall.east);
-    if (config->texture_wall.nort)
-        mlx_delete_texture(config->texture_wall.nort);
-    if (config->texture_wall.west)
-        mlx_delete_texture(config->texture_wall.west);
-     if (config->texture_wall.south)
-        mlx_delete_texture(config->texture_wall.south);
-    if (config->minimap.img)
-        mlx_delete_image(config->mlx, config->minimap.img);
-    if (config->img)
-        mlx_delete_image(config->mlx, config->img);
-    mlx_terminate(config->mlx);
+	if (config->texture_wall.east)
+		mlx_delete_texture(config->texture_wall.east);
+	if (config->texture_wall.nort)
+		mlx_delete_texture(config->texture_wall.nort);
+	if (config->texture_wall.west)
+		mlx_delete_texture(config->texture_wall.west);
+	if (config->texture_wall.south)
+		mlx_delete_texture(config->texture_wall.south);
+	if (config->minimap.img)
+		mlx_delete_image(config->mlx, config->minimap.img);
+	if (config->img)
+		mlx_delete_image(config->mlx, config->img);
+	mlx_terminate(config->mlx);
 	free_config(&config);
 }
 

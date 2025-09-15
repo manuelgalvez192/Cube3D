@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:33:27 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/13 17:45:09 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/15 16:28:46 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,28 @@ void	show_map(t_config *config)
 	}
 }
 
-#include "cube.h"
-
-bool check_extension(const char *arg, const char *extension)
+void	drain_gnl(int fd)
 {
-	const char *base = arg;
-	const char *p = arg;
-	size_t base_len;
-	size_t ext_len = ft_strlen(extension);
+	char	*tmp;
 
+	tmp = get_next_line(fd);
+	while (tmp)
+	{
+		free(tmp);
+		tmp = get_next_line(fd);
+	}
+}
+
+bool	check_extension(const char *arg, const char *extension)
+{
+	const char	*base;
+	const char	*p;
+	size_t		base_len;
+	size_t		ext_len;
+
+	base = arg;
+	p = arg;
+	ext_len = ft_strlen(extension);
 	if (!arg || !*arg)
 		return (true);
 	while (*p)
@@ -46,7 +59,7 @@ bool check_extension(const char *arg, const char *extension)
 	}
 	base_len = ft_strlen(base);
 	if (base[0] == '.')
-    	return (true);
+		return (true);
 	if (base_len <= ext_len)
 		return (true);
 	if (ft_strncmp(base + base_len - ext_len, extension, ext_len) != 0)

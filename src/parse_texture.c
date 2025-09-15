@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:52:58 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/13 23:05:44 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:33:19 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 int	get_identifier(char *line)
 {
-	if (ft_strncmp(line, "NO ", 3) == 0)
+	if (ft_strncmp(line, "NO ", 2) == 0)
 		return (1);
-	if (ft_strncmp(line, "SO ", 3) == 0)
+	if (ft_strncmp(line, "SO ", 2) == 0)
 		return (2);
-	if (ft_strncmp(line, "WE ", 3) == 0)
+	if (ft_strncmp(line, "WE ", 2) == 0)
 		return (3);
-	if (ft_strncmp(line, "EA ", 3) == 0)
+	if (ft_strncmp(line, "EA ", 2) == 0)
 		return (4);
 	return (0);
 }
@@ -44,7 +44,6 @@ void	path_maker(t_config *config, char *line, int id)
 		config->we_texture = path;
 	else if (id == 4)
 		config->ea_texture = path;
-	// free(path);
 }
 
 int	parse_texture_line(char *line, t_config *config)

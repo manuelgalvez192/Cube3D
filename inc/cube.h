@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/13 23:02:54 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/15 16:29:05 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,13 +154,14 @@ typedef struct s_config
 }	t_config;
 
 /* --- MAIN --- */
+void			drain_gnl(int fd);
 bool			check_extension(const char *arg, const char *extension);
 
 /* --- PARSER --- */
+int				validate_textures(t_config *config);
 int				handle_texture_and_color(char *trimmed, t_config *config);
 int				process_config_line(char *line, t_config *config,
 					char **first_line_out);
-int				count_remaining_map_lines(int fd, t_config *config);
 int				count_map_rows_and_capture_first(int fd, t_config *config,
 					char **first_line_out);
 void			parse_file(t_config *config, int fd);
@@ -174,6 +175,7 @@ int				parse_color_line(char *line, t_config *config);
 
 /* --- PARSE MAP --- */
 int				is_valid_map_line(char *line, t_config *config);
+int				count_remaining_map_lines(int fd, t_config *config);
 bool			populate_map_from_fd(int fd, int rows, char *first_line,
 					t_config *config);
 bool			fill_map_from_file(const char *path, int rows, char *first_line,
@@ -236,11 +238,10 @@ void			update_player_rotation_mouse(t_config *config);
 uint32_t		get_color_value(t_color color);
 
 /* --- FREE --- */
-void			drain_gnl(int fd);
 void			free_partial_map(char **map, int count);
 void			free_split(char **split);
 void			error_msg(char *msg, t_config *config);
 void			free_config(t_config **config);
-void    		free_mlx(t_config *config);
+void			free_mlx(t_config *config);
 
 #endif

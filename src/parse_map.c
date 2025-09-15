@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 03:20:43 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/10 20:18:35 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:33:37 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,13 @@ bool	populate_map_from_fd(int fd, int rows, char *first_line,
 	int		idx;
 
 	idx = 0;
-	while ((line = get_next_line(fd)) && idx < rows)
+	line = get_next_line(fd);
+	while (line && idx < rows)
 	{
 		if (!is_valid_map_line(line, config))
 		{
 			free(line);
+			line = get_next_line(fd);
 			continue ;
 		}
 		if (idx == 0)
@@ -59,6 +61,7 @@ bool	populate_map_from_fd(int fd, int rows, char *first_line,
 		}
 		else
 			config->map[idx++] = line;
+		line = get_next_line(fd);
 	}
 	if (idx != rows)
 		return (error_msg(MSG_ERR_ROW_COUNT_DONT_MATCH, config), false);

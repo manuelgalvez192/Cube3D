@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   strings.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 06:53:11 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/09 07:47:33 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:39:51 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRINGS_H
 # define STRINGS_H
 
+# define MSG_ERR_MISSING_TEXTURE "Error\nTextura no encontrada\n"
 # define MSG_ERR_INVALID_LINE	"Error\nMapa contiene línea inválida\n"
 # define MSG_ERR_INVALID_CHAR	"Error\nMapa contiene carácter inválido\n"
 # define MSG_ERR_ROW_COUNT_DONT_MATCH	"Error\nConteo de filas no coincide\n"

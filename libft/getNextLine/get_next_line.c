@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:43:34 by mgalvez-          #+#    #+#             */
-/*   Updated: 2024/11/14 15:32:32 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:43:40 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,28 +80,28 @@ char	*free_null(char **buffer, char **new_line)
 
 char	*get_next_line(int fd)
 {
-	static char	*new_line[1024];
+	static char	*new_line;
 	char		*buffer;
 	char		*line;
 	int			read_bytes;
 
 	buffer = ft_calloc_gnl(BUFFER_SIZE + 1, sizeof(char));
-	if (!new_line[fd])
-		new_line[fd] = ft_calloc_gnl(BUFFER_SIZE + 1, sizeof(char));
-	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0 || !new_line[fd] || !buffer)
-		return (free_null(&buffer, &new_line[fd]));
-	line = ft_strjoin_gnl(NULL, new_line[fd]);
+	if (!new_line)
+		new_line = ft_calloc_gnl(BUFFER_SIZE + 1, sizeof(char));
+	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0 || !new_line || !buffer)
+		return (free_null(&buffer, &new_line));
+	line = ft_strjoin_gnl(NULL, new_line);
 	read_bytes = 1;
 	while (!ft_strchr_gnl(buffer, '\n') && read_bytes > 0
 		&& !ft_strchr_gnl(line, '\n'))
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes < 0)
-			return (free(line), line = NULL, free_null(&buffer, &new_line[fd]));
+			return (free(line), line = NULL, free_null(&buffer, &new_line));
 		if (read_bytes == 0)
 			break ;
 		buffer[read_bytes] = '\0';
 		line = ft_strjoin_gnl(line, buffer);
 	}
-	return (free(buffer), finalize_line(line, &new_line[fd]));
+	return (free(buffer), finalize_line(line, &new_line));
 }
