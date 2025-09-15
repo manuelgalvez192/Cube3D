@@ -6,7 +6,7 @@
 /*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 03:20:43 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/15 17:33:37 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:01:45 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,28 @@ int	is_valid_map_line(char *line, t_config *config)
 		p++;
 	}
 	return (has_map_char);
+}
+
+int	count_remaining_map_lines(int fd, t_config *config)
+{
+	char	*line;
+	int		count;
+
+	count = 0;
+	line = get_next_line(fd);
+	while (line)
+	{
+		if (!is_valid_map_line(line, config))
+		{
+			free(line);
+			drain_gnl(fd);
+			return (-1);
+		}
+		count++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	return (count);
 }
 
 bool	populate_map_from_fd(int fd, int rows, char *first_line,

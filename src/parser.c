@@ -6,12 +6,24 @@
 /*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:05:59 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/15 17:34:00 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:03:39 by mgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 #include "strings.h"
+
+int	validate_textures(t_config *config)
+{
+	if (!config->no_texture || !config->so_texture || !config->we_texture
+		|| !config->ea_texture)
+	{
+		printf("Error\nMissing texture path(s)\n");
+		free_config(&config);
+		return (-1);
+	}
+	return (0);
+}
 
 int	handle_texture_and_color(char *trimmed, t_config *config)
 {
@@ -51,28 +63,6 @@ int	process_config_line(char *line, t_config *config, char **first_line_out)
 	if (!*first_line_out)
 		return (-1);
 	return (1);
-}
-
-int	count_remaining_map_lines(int fd, t_config *config)
-{
-	char	*line;
-	int		count;
-
-	count = 0;
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (!is_valid_map_line(line, config))
-		{
-			free(line);
-			drain_gnl(fd);
-			return (-1);
-		}
-		count++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	return (count);
 }
 
 int	count_map_rows_and_capture_first(int fd, t_config *config,
@@ -124,6 +114,12 @@ void	parse_file(t_config *config, int fd)
 		if (first_line)
 			free(first_line);
 		error_msg(MSG_ERR_MAP_NOT_FOUND, config);
+		return ;
+	}
+	if (validate_textures(config) == -1)
+	{
+		if (first_line)
+			free(first_line);
 		return ;
 	}
 	if (!fill_map_from_file(config->file_path, rows, first_line, config))
