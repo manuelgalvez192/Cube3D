@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/15 16:29:05 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/23 18:05:12 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 # include "../libft/libft.h"
 # include "../MLX42/include/MLX42/MLX42.h"
+
+# include "strings.h"
+# include "colors.h"
+# include "paths.h"
+
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -164,7 +169,7 @@ int				process_config_line(char *line, t_config *config,
 					char **first_line_out);
 int				count_map_rows_and_capture_first(int fd, t_config *config,
 					char **first_line_out);
-void			parse_file(t_config *config, int fd);
+int				parse_file(t_config *config, int fd);
 
 /* --- PARSE TEXTURE --- */
 int				get_identifier(char *line);
@@ -176,9 +181,9 @@ int				parse_color_line(char *line, t_config *config);
 /* --- PARSE MAP --- */
 int				is_valid_map_line(char *line, t_config *config);
 int				count_remaining_map_lines(int fd, t_config *config);
-bool			populate_map_from_fd(int fd, int rows, char *first_line,
+int				populate_map_from_fd(int fd, int rows, char *first_line,
 					t_config *config);
-bool			fill_map_from_file(const char *path, int rows, char *first_line,
+int				fill_map_from_file(const char *path, int rows, char *first_line,
 					t_config *config);
 
 /* --- CHECK CHARS --- */
@@ -192,7 +197,7 @@ void			put_pixel_safe(mlx_image_t *img, int x, int y, uint32_t color);
 void			clear_image(mlx_image_t *img);
 void			on_resize(int new_w, int new_h, void *param);
 void			on_key(mlx_key_data_t keydata, void *param);
-void			run_game(t_config *config);
+int				run_game(t_config *config);
 
 /* --- RENDER --- */
 void			render(void *param);
@@ -230,17 +235,13 @@ void			update_player_rotation_keys(t_config *config,
 void			draw_player_ray_cone(t_config *config);
 double			get_delta_time(void);
 
-/* --- MOUSE --- */
-void			on_mouse_move(t_config *config);
-void			update_player_rotation_mouse(t_config *config);
-
 /* --- COLOR --- */
 uint32_t		get_color_value(t_color color);
 
 /* --- FREE --- */
 void			free_partial_map(char **map, int count);
 void			free_split(char **split);
-void			error_msg(char *msg, t_config *config);
+int				error_msg(char *msg);
 void			free_config(t_config **config);
 void			free_mlx(t_config *config);
 

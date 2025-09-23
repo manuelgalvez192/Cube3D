@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:33:27 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/15 16:28:46 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/23 17:30:13 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,37 @@ int	main(int argc, char **argv)
 	int			fd;
 
 	if (argc != 2)
-		return (error_msg("Error\nNumero de argumentos invalido\n", NULL), 1);
+		return (error_msg("Error\tNumero de argumentos invalido.\n"));
 	if (check_extension(argv[1], ".cub"))
-		return (error_msg("Error\nExtension de archivo invalida\n", NULL), 1);
+		return (error_msg("Error\tExtension de archivo invalida.\n"));
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		return (error_msg("Error\nNo se pudo abrir el archivo\n", NULL), 1);
+		return (error_msg("Error\tNo se pudo abrir el archivo.\n"));
 	config = ft_calloc(1, sizeof(t_config));
 	if (!config)
-		return (error_msg("Error\nFallo al asignar de memoria\n", config), 1);
+	{
+		close(fd);
+		return (error_msg("Error\tFallo al asignar de memoria.\n"));
+	}
 	config->file_path = ft_strdup(argv[1]);
 	if (!config->file_path)
-		return (error_msg("Error\nFallo al asignar de memoria\n", config), 1);
-	parse_file(config, fd);
-	show_map(config);
+	{
+		close(fd);
+		free(config);
+		return (error_msg("Error\tFallo al asignar de memoria.\n"));
+	}
+	if (parse_file(config, fd) == EXIT_FAILURE)
+	{
+		close(fd);
+		free_config(&config);
+		return (EXIT_FAILURE);
+	}
 	close(fd);
-	run_game(config);
-	free_config(&config);
-	return (0);
+	if (run_game(config) == EXIT_FAILURE)
+	{
+		free_mlx(config);
+		return (EXIT_FAILURE);
+	}
+	free_mlx(config);
+	return (EXIT_SUCCESS);
 }

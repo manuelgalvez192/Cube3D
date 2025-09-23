@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 03:20:43 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/15 18:01:45 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/23 18:09:17 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int	is_valid_map_line(char *line, t_config *config)
 	has_map_char = 0;
 	p = line;
 	if (!line)
-		return (error_msg(MSG_ERR_INVALID_LINE, config), 0);
+	{
+		error_msg(MSG_ERR_INVALID_LINE);
+		return (0);
+	}
 	while (*p && *p != '\n')
 	{
 		if (*p == '0' || *p == '1' || *p == 'N'
@@ -30,7 +33,10 @@ int	is_valid_map_line(char *line, t_config *config)
 		else if (*p != ' ' && *p != '\t')
 		{
 			if (config->map_rows > 0)
-				return (error_msg(MSG_ERR_INVALID_CHAR, config), 0);
+			{
+				error_msg(MSG_ERR_INVALID_CHAR);
+				return (0);
+			}
 			return (0);
 		}
 		p++;
@@ -60,7 +66,7 @@ int	count_remaining_map_lines(int fd, t_config *config)
 	return (count);
 }
 
-bool	populate_map_from_fd(int fd, int rows, char *first_line,
+int	populate_map_from_fd(int fd, int rows, char *first_line,
 	t_config *config)
 {
 	char	*line;
@@ -86,32 +92,32 @@ bool	populate_map_from_fd(int fd, int rows, char *first_line,
 		line = get_next_line(fd);
 	}
 	if (idx != rows)
-		return (error_msg(MSG_ERR_ROW_COUNT_DONT_MATCH, config), false);
-	return (true);
+		return (error_msg(MSG_ERR_ROW_COUNT_DONT_MATCH));
+	return (EXIT_SUCCESS);
 }
 
-bool	fill_map_from_file(const char *path, int rows, char *first_line,
+int	fill_map_from_file(const char *path, int rows, char *first_line,
 	t_config *config)
 {
 	int		fd;
-	bool	ok;
+	bool	result;
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (error_msg(MSG_ERR_OPENING_FILE, config), false);
+		return (error_msg(MSG_ERR_OPENING_FILE));
 	config->map = malloc(sizeof(char *) * (rows + 1));
 	if (!config->map)
 	{
 		close(fd);
-		return (error_msg(MSG_ERR_MALLOC_MAP, config), false);
+		return (error_msg(MSG_ERR_MALLOC_MAP));
 	}
-	ok = populate_map_from_fd(fd, rows, first_line, config);
+	result = populate_map_from_fd(fd, rows, first_line, config);
 	config->map[rows] = NULL;
 	config->map_rows = rows;
 	close(fd);
 	if (!check_single_spawn(config) || !check_invalid_spaces(config))
-		error_msg(MSG_ERR_INVALID_MAP, config);
-	return (ok);
+		return (error_msg(MSG_ERR_INVALID_MAP));
+	return (result);
 }
 
 void	compute_map_dims(t_config *config)

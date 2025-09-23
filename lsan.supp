@@ -1,0 +1,5 @@
+leak:glfwCreateWindow
+leak:libglfw.so
+leak:libGLX_mesa.so
+leak:libLLVM.so
+leak:libicuuc.so

@@ -3,26 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgalvez- <mgalvez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:05:59 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/15 18:03:39 by mgalvez-         ###   ########.fr       */
+/*   Updated: 2025/09/23 17:59:10 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-#include "strings.h"
 
 int	validate_textures(t_config *config)
 {
 	if (!config->no_texture || !config->so_texture || !config->we_texture
 		|| !config->ea_texture)
-	{
-		printf("Error\nMissing texture path(s)\n");
-		free_config(&config);
-		return (-1);
-	}
-	return (0);
+		return (error_msg("Error\tMissing texture path(s)\n"));
+	return (EXIT_SUCCESS);
 }
 
 int	handle_texture_and_color(char *trimmed, t_config *config)
@@ -94,7 +89,7 @@ int	count_map_rows_and_capture_first(int fd, t_config *config,
 	return (0);
 }
 
-void	parse_file(t_config *config, int fd)
+int	parse_file(t_config *config, int fd)
 {
 	char	*first_line;
 	int		rows;
@@ -106,25 +101,24 @@ void	parse_file(t_config *config, int fd)
 	{
 		if (first_line)
 			free(first_line);
-		error_msg(MSG_ERR_PARSE_HEADER_OR_MAP, config);
-		return ;
+		return (error_msg(MSG_ERR_PARSE_HEADER_OR_MAP));
 	}
 	if (rows == 0 || !first_line)
 	{
 		if (first_line)
 			free(first_line);
-		error_msg(MSG_ERR_MAP_NOT_FOUND, config);
-		return ;
+		return (error_msg(MSG_ERR_MAP_NOT_FOUND));
 	}
-	if (validate_textures(config) == -1)
+	if (validate_textures(config) == EXIT_FAILURE)
 	{
 		if (first_line)
 			free(first_line);
-		return ;
+		return (EXIT_FAILURE);
 	}
-	if (!fill_map_from_file(config->file_path, rows, first_line, config))
-		return ;
+	if (fill_map_from_file(config->file_path, rows, first_line, config) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	if (!check_single_spawn(config))
-		error_msg(MSG_ERR_MAP_NOT_STARTING_POINT, config);
+		return (error_msg(MSG_ERR_MAP_NOT_STARTING_POINT));
 	config->map[(int)config->player_y][(int)config->player_x] = '0';
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 06:23:33 by mcaro-ro          #+#    #+#             */
-/*   Updated: 2025/09/13 23:25:39 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/23 16:49:32 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,7 @@ void	on_key(mlx_key_data_t keydata, void *param)
 
 	config = param;
 	if (keydata.key == MLX_KEY_ESCAPE)
-	{
-		// mlx_close_window(config->mlx);
-		free_mlx(config);
-	}
+		mlx_close_window(config->mlx);
 	if (keydata.key == MLX_KEY_M && keydata.action == MLX_PRESS)
 		config->minimap.visibility = !config->minimap.visibility;
 	if (keydata.action == MLX_PRESS)

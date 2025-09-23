@@ -1,7 +1,7 @@
 MAKEFLAGS += --no-print-directory
 # PROYECT
 NAME = cub3D
-MAP = ./maps/map.cub
+MAP ?= ./maps/map.cub
 
 # PATHS
 LIBFT = ./libft/
@@ -12,7 +12,7 @@ LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 # COMPILER
 CC = cc -g3
 ARFLAGS = -rc
-CFLAGS = -Wall -Wextra -Werror -g3 -Iinc #-fsanitize=address -fno-omit-frame-pointer
+CFLAGS = -Wall -Wextra -Werror -g3 -Iinc -fsanitize=address -fno-omit-frame-pointer
 
 # Remove command
 RM = rm -f
@@ -28,7 +28,6 @@ SRCS = src/main.c						\
 		src/player/player.c				\
 		src/player/player_movement.c	\
 		src/player/player_utils.c		\
-		src/mouse.c						\
 		src/mlx/mlx.c					\
 		src/mlx/hooks.c					\
 		src/render/render.c				\
@@ -77,7 +76,7 @@ re: fclean all
 
 # A rule to run the program
 run: all
-	./$(NAME) $(MAP)
+	@LSAN_OPTIONS="suppressions=lsan.supp" ./$(NAME) $(MAP)
 
 error: all
 	@echo
