@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:20:32 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/23 18:05:12 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/23 18:29:29 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,8 @@ int				parse_rgb(char *str, t_color *color);
 int				parse_color_line(char *line, t_config *config);
 
 /* --- PARSE MAP --- */
-int				is_valid_map_line(char *line, t_config *config);
-int				count_remaining_map_lines(int fd, t_config *config);
+bool			is_valid_map_line(char *line);
+int				count_remaining_map_lines(int fd);
 int				populate_map_from_fd(int fd, int rows, char *first_line,
 					t_config *config);
 int				fill_map_from_file(const char *path, int rows, char *first_line,

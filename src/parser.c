@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:05:59 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/23 17:59:10 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/23 18:29:45 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	process_config_line(char *line, t_config *config, char **first_line_out)
 		return (-1);
 	if (ret == 1)
 		return (0);
-	if (!is_valid_map_line(line, config))
+	if (!is_valid_map_line(line))
 		return (-1);
 	*first_line_out = ft_strdup(line);
 	if (!*first_line_out)
@@ -81,7 +81,7 @@ int	count_map_rows_and_capture_first(int fd, t_config *config,
 			continue ;
 		}
 		free(line);
-		remaining_count = count_remaining_map_lines(fd, config);
+		remaining_count = count_remaining_map_lines(fd);
 		if (remaining_count == -1)
 			return (-1);
 		return (1 + remaining_count);

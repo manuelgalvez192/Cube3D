@@ -6,45 +6,38 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 03:20:43 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/23 18:09:17 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/23 18:31:23 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 #include "strings.h"
 
-int	is_valid_map_line(char *line, t_config *config)
+bool	is_valid_map_line(char *line)
 {
-	int		has_map_char;
+	bool	has_map_char;
 	char	*p;
 
-	has_map_char = 0;
-	p = line;
+	has_map_char = false;
 	if (!line)
 	{
 		error_msg(MSG_ERR_INVALID_LINE);
-		return (0);
+		return (false);
 	}
+	p = line;
 	while (*p && *p != '\n')
 	{
 		if (*p == '0' || *p == '1' || *p == 'N'
 			|| *p == 'S' || *p == 'E' || *p == 'W')
-			has_map_char = 1;
+			has_map_char = true;
 		else if (*p != ' ' && *p != '\t')
-		{
-			if (config->map_rows > 0)
-			{
-				error_msg(MSG_ERR_INVALID_CHAR);
-				return (0);
-			}
-			return (0);
-		}
+			return (false);
 		p++;
 	}
 	return (has_map_char);
 }
 
-int	count_remaining_map_lines(int fd, t_config *config)
+int	count_remaining_map_lines(int fd)
 {
 	char	*line;
 	int		count;
@@ -53,7 +46,7 @@ int	count_remaining_map_lines(int fd, t_config *config)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (!is_valid_map_line(line, config))
+		if (!is_valid_map_line(line))
 		{
 			free(line);
 			drain_gnl(fd);
@@ -76,7 +69,7 @@ int	populate_map_from_fd(int fd, int rows, char *first_line,
 	line = get_next_line(fd);
 	while (line && idx < rows)
 	{
-		if (!is_valid_map_line(line, config))
+		if (!is_valid_map_line(line))
 		{
 			free(line);
 			line = get_next_line(fd);
