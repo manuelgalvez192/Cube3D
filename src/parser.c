@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:05:59 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/23 18:29:45 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/24 16:11:21 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,25 +97,20 @@ int	parse_file(t_config *config, int fd)
 	first_line = NULL;
 	rows = count_map_rows_and_capture_first(fd, config, &first_line);
 	close(fd);
-	if (rows == -1)
+	if (rows <= 0 || !first_line)
 	{
 		if (first_line)
 			free(first_line);
-		return (error_msg(MSG_ERR_PARSE_HEADER_OR_MAP));
-	}
-	if (rows == 0 || !first_line)
-	{
-		if (first_line)
-			free(first_line);
+		if (rows == -1)
+			return (error_msg(MSG_ERR_PARSE_HEADER_OR_MAP));
 		return (error_msg(MSG_ERR_MAP_NOT_FOUND));
 	}
 	if (validate_textures(config) == EXIT_FAILURE)
 	{
-		if (first_line)
-			free(first_line);
+		free(first_line);
 		return (EXIT_FAILURE);
 	}
-	if (fill_map_from_file(config->file_path, rows, first_line, config) == EXIT_FAILURE)
+	if (fill_map_from_file(config->file_path, rows, first_line, config) == 1)
 		return (EXIT_FAILURE);
 	if (!check_single_spawn(config))
 		return (error_msg(MSG_ERR_MAP_NOT_STARTING_POINT));

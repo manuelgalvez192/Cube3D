@@ -6,7 +6,7 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 00:18:17 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/23 17:37:33 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/24 16:07:44 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,34 +42,23 @@ void	free_split(char **split)
 	free(split);
 }
 
-int	error_msg(char *msg)
+static void	free_texture(mlx_texture_t **tex)
 {
-	printf("%s%s%s", COLOR_MSG_RED, msg, COLOR_MSG_RESET);
-	return (EXIT_FAILURE);
+	if (tex && *tex)
+	{
+		mlx_delete_texture(*tex);
+		*tex = NULL;
+	}
 }
 
 void	free_mlx(t_config *config)
 {
-	if (config->texture_wall.east)
-	{
-		mlx_delete_texture(config->texture_wall.east);
-		config->texture_wall.east = NULL;
-	}
-	if (config->texture_wall.nort)
-	{
-		mlx_delete_texture(config->texture_wall.nort);
-		config->texture_wall.nort = NULL;
-	}
-	if (config->texture_wall.west)
-	{
-		mlx_delete_texture(config->texture_wall.west);
-		config->texture_wall.west = NULL;
-	}
-	if (config->texture_wall.south)
-	{
-		mlx_delete_texture(config->texture_wall.south);
-		config->texture_wall.south = NULL;
-	}
+	if (!config)
+		return ;
+	free_texture(&config->texture_wall.nort);
+	free_texture(&config->texture_wall.south);
+	free_texture(&config->texture_wall.east);
+	free_texture(&config->texture_wall.west);
 	if (config->minimap.img)
 	{
 		mlx_delete_image(config->mlx, config->minimap.img);

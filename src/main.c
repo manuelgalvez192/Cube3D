@@ -6,25 +6,16 @@
 /*   By: mcaro-ro <mcaro-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 22:33:27 by mgalvez-          #+#    #+#             */
-/*   Updated: 2025/09/23 17:30:13 by mcaro-ro         ###   ########.fr       */
+/*   Updated: 2025/09/24 16:20:41 by mcaro-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-// Muestra el mapa en consola (para debug)
-void	show_map(t_config *config)
+int	error_msg(char *msg)
 {
-	int	i;
-
-	i = 0;
-	printf("Mapa (%d filas, %f angle,:\n",
-		config->map_rows, config->player_angle);
-	while (i < config->map_rows)
-	{
-		printf("%s", config->map[i]);
-		i++;
-	}
+	printf("%s%s%s", COLOR_MSG_RED, msg, COLOR_MSG_RESET);
+	return (EXIT_FAILURE);
 }
 
 void	drain_gnl(int fd)
@@ -81,29 +72,17 @@ int	main(int argc, char **argv)
 		return (error_msg("Error\tNo se pudo abrir el archivo.\n"));
 	config = ft_calloc(1, sizeof(t_config));
 	if (!config)
-	{
-		close(fd);
-		return (error_msg("Error\tFallo al asignar de memoria.\n"));
-	}
+		return (close(fd), error_msg("Error\tFallo al asignar de memoria.\n"));
 	config->file_path = ft_strdup(argv[1]);
 	if (!config->file_path)
 	{
-		close(fd);
 		free(config);
-		return (error_msg("Error\tFallo al asignar de memoria.\n"));
+		return (close(fd), error_msg("Error\tFallo al asignar de memoria.\n"));
 	}
 	if (parse_file(config, fd) == EXIT_FAILURE)
-	{
-		close(fd);
-		free_config(&config);
-		return (EXIT_FAILURE);
-	}
+		return (close(fd), free_config(&config), EXIT_FAILURE);
 	close(fd);
-	if (run_game(config) == EXIT_FAILURE)
-	{
-		free_mlx(config);
-		return (EXIT_FAILURE);
-	}
+	run_game(config);
 	free_mlx(config);
 	return (EXIT_SUCCESS);
 }
